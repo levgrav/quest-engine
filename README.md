@@ -1,4 +1,4 @@
-# Text RPG Game Engine
+# Quest Engine
 
 Version: 0.0.0 - Initial Commit
 
@@ -22,10 +22,9 @@ NOTE: I hope to one day be able to run the LLM locally, but we'll have to wait f
 
 ## Usage
 
-To use the game engine, clone this repository.
+To use quest engine, clone this repository.
 
-`git clone https://github.com/levgrav/text-rpg.git
-cd rpg-game-engine`
+`git clone https://github.com/levgrav/guest-engine.git`
 
 ## Lisence
 
