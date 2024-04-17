@@ -194,16 +194,18 @@ class MainWindow(QMainWindow):
         layout.addWidget(npc_toolbox)
         layout.addWidget(npc_toolbox, alignment=Qt.AlignmentFlag.AlignTop)
 
+        filepath = "files/game_data/game_templates/cyberpunk_adventure/npcs/"
+
         # Custom NPCs Section
         custom_npc_widget = QWidget()
         custom_npc_layout = QVBoxLayout(custom_npc_widget)
 
-        # List Widget for displaying Custom NPCs
-        self.custom_npc_json_widget = QJsonWidget(
-            display="json",
-            filename="files/game_data/templates/cyberpunk_adventure/npcs/custom/example_data.json",
-        )
-        custom_npc_layout.addWidget(self.custom_npc_list)
+        for root, dirs, files in os.walk(filepath + "custom"):
+            for file in files:
+                if file.endswith(".json"):
+                    w = QJsonWidget(display="ui", filename=os.path.join(root, file))
+                    w.setMinimumHeight(100)
+                    custom_npc_layout.addWidget(w)
 
         # Button for adding new Custom NPCs
         new_custom_npc_button = QPushButton("+ New")
@@ -216,12 +218,12 @@ class MainWindow(QMainWindow):
         npc_template_widget = QWidget()
         npc_template_layout = QVBoxLayout(npc_template_widget)
 
-        # List Widget for displaying NPC Templates
-        self.npc_template_json_widget = QJsonWidget(
-            display="json",
-            filename="files/game_data/templates/cyberpunk_adventure/npcs/templates/example_data.json",
-        )
-        npc_template_layout.addWidget(self.npc_template_list)
+        for root, dirs, files in os.walk(filepath + "template"):
+            for file in files:
+                if file.endswith(".json"):
+                    npc_template_layout.addWidget(
+                        QJsonWidget(display="ui", filename=os.path.join(root, file))
+                    )
 
         # Button for adding new NPC Templates
         new_npc_template_button = QPushButton("+ New")
@@ -323,6 +325,7 @@ class QJsonWidget(QWidget):
         super().__init__()
 
         self.content = content
+
         if filename:
             with open(filename, "r") as file:
                 self.content = json.load(file)
@@ -330,17 +333,20 @@ class QJsonWidget(QWidget):
         self.init_ui()
 
     def init_ui(self):
+        self.setLayout(QVBoxLayout(self))
+        layout = self.layout()
 
-        layout = QVBoxLayout(self)
+        self.title = QLabel(self.content.get("name", "Untitled"))
+
+        layout.addWidget(self.title)
 
         if self.display == "ui":
-            pass
+            self.display_widget = QJsonUI(self, self.content)
 
         elif self.display == "json":
-            self.json_text_edit = QTextEdit(text=json.dumps(self.content, indent=4))
-            layout.addWidget(self.json_text_edit)
+            self.display_widget = QJsonText(self, self.content)
 
-        self.setLayout(layout)
+        layout.addWidget(self.display_widget)
 
     def set_content(self, content):
         self.content = content
@@ -351,8 +357,94 @@ class QJsonWidget(QWidget):
             self.content = json.load(file)
         self.update_ui(),
 
+    def clear_layout(self, layout):
+        while layout.count():
+            child = layout.takeAt(0)
+            if child.widget():
+                child.widget().deleteLater()
+            elif child.layout():
+                self.clear_layout(child.layout())
+
     def update_ui(self):
+        self.title.setText(self.content.get("name", "Untitled"))
+        self.display_widget.set_content(self.content)
+
+    def setWarning(self, warning: bool):
+        if warning:
+            self.setStyleSheet("border: 1px solid red")
+        else:
+            self.setStyleSheet("")
+
+
+class QJsonText(QTextEdit):
+    def __init__(self, parent, content=None):
+        super().__init__(parent)
+
+        self.content = content
+        self.setText(json.dumps(self.content, indent=4))
+
+    def set_content(self, content):
+        self.content = content
+        self.setText(json.dumps(self.content, indent=4))
+
+    def focusInEvent(self, event):
+        self.parent().setMinimumHeight(200)
+        self.parent().setCursor(Qt.CursorShape.IBeamCursor)
+        super().focusInEvent(event)
+
+    def focusOutEvent(self, event):
+        self.parent().setMinimumHeight(100)
+        self.parent().setCursor(Qt.CursorShape.ArrowCursor)
+
+        try:
+            self.parent().set_content(json.loads(self.toPlainText()))
+            self.parent().setWarning(False)
+        except json.JSONDecodeError:
+            self.parent().setWarning(True)
+        super().focusOutEvent(event)
+
+
+class QJsonUI(QWidget):
+    def __init__(self, parent, content=None):
+        super().__init__(parent)
+
+        self.content = content
+
         self.init_ui()
+
+    def init_ui(self):
+        self.setLayout(QVBoxLayout(self))
+        layout = self.layout()
+
+        for key, value in self.content.items():
+            if isinstance(value, dict):
+                w = QJsonUI(self, value)
+                layout.addWidget(w)
+            elif isinstance(value, list):
+                w = QListWidget(self)
+                for item in value:
+                    w.addItem(QTreeWidgetItem(w, [item]))
+                layout.addWidget(w)
+            else:
+                w = QWidget(self)
+                w.setLayout(QHBoxLayout(w))
+
+                w.layout().addWidget(QLabel(f"{key}:"))
+                w.layout().addWidget(QLineEdit(str(value)))
+                layout.addWidget(w)
+
+    def set_content(self, content):
+        self.content = content
+        self.clear_layout(self.layout())
+        self.init_ui()
+
+    def clear_layout(self, layout):
+        while layout.count():
+            child = layout.takeAt(0)
+            if child.widget():
+                child.widget().deleteLater()
+            elif child.layout():
+                self.clear_layout(child.layout())
 
 
 if __name__ == "__main__":
