@@ -1,3 +1,4 @@
+import json
 from PyQt6.QtWidgets import (
     QApplication,
     QMainWindow,
@@ -13,14 +14,24 @@ from PyQt6.QtWidgets import (
     QTextEdit,
     QSplitter,
     QHBoxLayout,
+    QToolBox,
+    QFormLayout,
+    QCheckBox,
+    QSpinBox,
+    QPushButton,
+    QColorDialog,
+    QLineEdit,
+    QListWidget,
 )
 from PyQt6.QtGui import QIcon, QKeySequence, QAction
 from PyQt6.QtCore import Qt
+import os
 
 
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
+        self.project_name = "cyberpunk_adventure"
         self.setWindowTitle("Quest Engine Create")
         self.setWindowIcon(QIcon("icon_path.png"))  # Path to your application's icon
         self.setGeometry(100, 100, 1200, 800)  # Adjust size as needed
@@ -120,23 +131,32 @@ class MainWindow(QMainWindow):
         main_splitter = QSplitter(Qt.Orientation.Horizontal, self)
         self.setCentralWidget(main_splitter)
 
-        # Left Side Panel
+        # Left Side Panel - Project Structure Tree
         left_panel = QWidget()
         left_layout = QVBoxLayout(left_panel)
-        left_panel_info = QLabel("Additional Tools")
-        left_layout.addWidget(left_panel_info)
+        self.project_tree_view = QTreeWidget()
+        self.project_tree_view.setHeaderLabels(
+            ["Project Structure"]
+        )  # Correctly set header labels
+        self.populate_project_tree()  # You would define this method to populate the tree
+        left_layout.addWidget(self.project_tree_view)
         main_splitter.addWidget(left_panel)
 
         # Central Tab Widget
-        self.create_central_tab_widget()
+        self.create_central_tab_widget()  # Ensure this method sets up self.tab_widget
         main_splitter.addWidget(self.tab_widget)
 
-        # Right Side Panel
+        # Right Side Panel - AI Interface
         right_panel = QWidget()
         right_layout = QVBoxLayout(right_panel)
-        right_panel_info = QTextEdit()  # Placeholder for any content
-        right_panel_info.setPlainText("Details/Properties Panel")
-        right_layout.addWidget(right_panel_info)
+        self.ai_text_output = QTextEdit()
+        self.ai_text_output.setReadOnly(True)
+        self.ai_text_output.setPlainText("AI Output will be displayed here...")
+        self.ai_text_input = QLineEdit()
+        self.ai_text_input.setPlaceholderText("Enter AI command...")
+        self.ai_text_input.returnPressed.connect(self.process_ai_command)
+        right_layout.addWidget(self.ai_text_output)
+        right_layout.addWidget(self.ai_text_input)
         main_splitter.addWidget(right_panel)
 
         # Setting initial sizes for splitters
@@ -159,24 +179,180 @@ class MainWindow(QMainWindow):
 
         # Populate each tab with placeholder content
         self.populate_tab(self.map_editor, "Map Editing Tools Here")
-        self.populate_tab(self.npc_editor, "NPC Editing Tools Here")
+        self.setup_npc_editor()
         self.populate_tab(self.item_editor, "Item Editing Tools Here")
         self.populate_tab(self.quest_editor, "Quest Editing Tools Here")
         self.populate_settings_tab()
+
+    def setup_npc_editor(self):
+        layout = QVBoxLayout(
+            self.npc_editor
+        )  # Assuming `self.npc_editor` is already defined as a QWidget
+
+        # Create the toolbox and sections
+        npc_toolbox = QToolBox()
+        layout.addWidget(npc_toolbox)
+        layout.addWidget(npc_toolbox, alignment=Qt.AlignmentFlag.AlignTop)
+
+        # Custom NPCs Section
+        custom_npc_widget = QWidget()
+        custom_npc_layout = QVBoxLayout(custom_npc_widget)
+
+        # List Widget for displaying Custom NPCs
+        self.custom_npc_json_widget = QJsonWidget(
+            display="json",
+            filename="files/game_data/templates/cyberpunk_adventure/npcs/custom/example_data.json",
+        )
+        custom_npc_layout.addWidget(self.custom_npc_list)
+
+        # Button for adding new Custom NPCs
+        new_custom_npc_button = QPushButton("+ New")
+        new_custom_npc_button.clicked.connect(self.add_new_custom_npc)
+        custom_npc_layout.addWidget(new_custom_npc_button)
+
+        npc_toolbox.addItem(custom_npc_widget, "Custom NPCs")
+
+        # NPC Templates Section
+        npc_template_widget = QWidget()
+        npc_template_layout = QVBoxLayout(npc_template_widget)
+
+        # List Widget for displaying NPC Templates
+        self.npc_template_json_widget = QJsonWidget(
+            display="json",
+            filename="files/game_data/templates/cyberpunk_adventure/npcs/templates/example_data.json",
+        )
+        npc_template_layout.addWidget(self.npc_template_list)
+
+        # Button for adding new NPC Templates
+        new_npc_template_button = QPushButton("+ New")
+        new_npc_template_button.clicked.connect(self.add_new_npc_template)
+        npc_template_layout.addWidget(new_npc_template_button)
+
+        npc_toolbox.addItem(npc_template_widget, "NPC Templates")
+
+    def add_new_custom_npc(self):
+        # Placeholder method for adding a new Custom NPC
+        print("Adding new Custom NPC...")
+
+    def add_new_npc_template(self):
+        # Placeholder method for adding a new NPC Template
+        print("Adding new NPC Template...")
 
     def populate_tab(self, tab_widget, content):
         layout = QVBoxLayout(tab_widget)
         layout.addWidget(QLabel(content))
 
     def populate_settings_tab(self):
-        settings_tree = QTreeWidget(self.settings_editor)
-        settings_tree.setHeaderLabel("Settings Categories")
-        game_settings = QTreeWidgetItem(settings_tree, ["Game Settings"])
-        ui_settings = QTreeWidgetItem(settings_tree, ["UI Settings"])
-        ai_settings = QTreeWidgetItem(settings_tree, ["AI Settings"])
-        advanced_settings = QTreeWidgetItem(settings_tree, ["Advanced Settings"])
         settings_layout = QVBoxLayout(self.settings_editor)
-        settings_layout.addWidget(settings_tree)
+        settings_toolbox = QToolBox()
+        settings_layout.addWidget(settings_toolbox, alignment=Qt.AlignmentFlag.AlignTop)
+
+        # General Settings
+        general_settings_widget = QWidget()
+        general_layout = QFormLayout()
+        autosave_checkbox = QCheckBox("Enable Autosave")
+        general_layout.addRow("Autosave:", autosave_checkbox)
+        autosave_interval_spinbox = QSpinBox()
+        autosave_interval_spinbox.setRange(1, 60)  # in minutes
+        general_layout.addRow("Autosave Interval (minutes):", autosave_interval_spinbox)
+        general_settings_widget.setLayout(general_layout)
+        settings_toolbox.addItem(general_settings_widget, "General Settings")
+
+        # UI Customizations
+        ui_settings_widget = QWidget()
+        ui_layout = QVBoxLayout()
+        theme_button = QPushButton("Change Theme Color")
+        theme_button.clicked.connect(self.change_theme_color)
+        ui_layout.addWidget(theme_button)
+        ui_settings_widget.setLayout(ui_layout)
+        settings_toolbox.addItem(ui_settings_widget, "UI Customizations")
+
+        # Game Mechanics
+        game_mechanics_widget = QWidget()
+        mechanics_layout = QVBoxLayout()
+        enable_dlc_checkbox = QCheckBox("Enable DLC Content")
+        mechanics_layout.addWidget(enable_dlc_checkbox)
+        game_mechanics_widget.setLayout(mechanics_layout)
+        settings_toolbox.addItem(game_mechanics_widget, "Game Mechanics")
+
+        # Script Settings
+        script_settings_widget = QWidget()
+        script_layout = QVBoxLayout()
+        enable_debug_mode_checkbox = QCheckBox("Enable Script Debug Mode")
+        script_layout.addWidget(enable_debug_mode_checkbox)
+        script_settings_widget.setLayout(script_layout)
+        settings_toolbox.addItem(script_settings_widget, "Script Settings")
+
+    def populate_project_tree(self):
+        root_directory = "files/game_data/templates/" + self.project_name
+        self.project_tree_view.clear()  # Clear existing items if any
+        root_item = QTreeWidgetItem(
+            self.project_tree_view, [os.path.basename(root_directory)]
+        )
+        self.add_directory_contents(root_item, root_directory)
+        self.project_tree_view.expandAll()  # Optionally expand all nodes
+
+    def add_directory_contents(self, parent_item, directory):
+        for entry in os.scandir(directory):
+            if entry.is_dir():
+                dir_item = QTreeWidgetItem(parent_item, [entry.name])
+                self.add_directory_contents(
+                    dir_item, entry.path
+                )  # Recursive call to add subdirectory contents
+            else:
+                QTreeWidgetItem(parent_item, [entry.name])  # Add file as child item
+
+    def process_ai_command(self):
+        command = self.ai_text_input.text()
+        response = (
+            f"Processing command: {command}"  # Placeholder for AI processing logic
+        )
+        self.ai_text_output.append(response)
+        self.ai_text_input.clear()
+
+    def change_theme_color(self):
+        color = QColorDialog.getColor()
+        if color.isValid():
+            print(f"Chosen color: {color.name()}")  # Example action
+
+
+class QJsonWidget(QWidget):
+    def __init__(self, display="ui", content=None, filename=None):
+        assert display in ["ui", "json"]
+        self.display = display
+        super().__init__()
+
+        self.content = content
+        if filename:
+            with open(filename, "r") as file:
+                self.content = json.load(file)
+
+        self.init_ui()
+
+    def init_ui(self):
+
+        layout = QVBoxLayout(self)
+
+        if self.display == "ui":
+            pass
+
+        elif self.display == "json":
+            self.json_text_edit = QTextEdit(text=json.dumps(self.content, indent=4))
+            layout.addWidget(self.json_text_edit)
+
+        self.setLayout(layout)
+
+    def set_content(self, content):
+        self.content = content
+        self.update_ui(),
+
+    def set_content_from_file(self, filename):
+        with open(filename, "r") as file:
+            self.content = json.load(file)
+        self.update_ui(),
+
+    def update_ui(self):
+        self.init_ui()
 
 
 if __name__ == "__main__":
