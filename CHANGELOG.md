@@ -20,3 +20,16 @@ icon
 ### Changed
 
 ### Fixed
+
+## [0.1.0] - 2024-04-13
+  
+AI integration - Extremely buggy
+ 
+### Added
+
+AI interation using GPT 4o mini
+ 
+### Changed
+
+### Fixed
+

@@ -29,8 +29,9 @@ import os
 
 
 class MainWindow(QMainWindow):
-    def __init__(self):
+    def __init__(self, gui):
         super().__init__()
+        self.gui = gui
         self.project_name = "cyberpunk_adventure"
         self.setWindowTitle("Quest Engine Create")
         self.setWindowIcon(QIcon("icon_path.png"))  # Path to your application's icon
@@ -66,6 +67,9 @@ class MainWindow(QMainWindow):
         self.options_action = QAction("&Options...", self)
 
         # View menu actions
+        self.toggle_json_action = QAction(
+            "Toggle &JSON", self, shortcut="Ctrl+J", triggered=self.toggle_json_view
+        )
         self.toggle_sidebar_action = QAction("Toggle &Sidebar", self, shortcut="Ctrl+T")
         self.zoom_in_action = QAction("Zoom &In", self, shortcut="Ctrl++")
         self.zoom_out_action = QAction("Zoom &Out", self, shortcut="Ctrl+-")
@@ -99,6 +103,7 @@ class MainWindow(QMainWindow):
 
         # View Menu
         view_menu = menu_bar.addMenu("&View")
+        view_menu.addAction(self.toggle_json_action)
         view_menu.addAction(self.toggle_sidebar_action)
         view_menu.addSeparator()
         view_menu.addAction(self.zoom_in_action)
@@ -151,7 +156,6 @@ class MainWindow(QMainWindow):
         right_layout = QVBoxLayout(right_panel)
         self.ai_text_output = QTextEdit()
         self.ai_text_output.setReadOnly(True)
-        self.ai_text_output.setPlainText("AI Output will be displayed here...")
         self.ai_text_input = QLineEdit()
         self.ai_text_input.setPlaceholderText("Enter AI command...")
         self.ai_text_input.returnPressed.connect(self.process_ai_command)
@@ -180,8 +184,8 @@ class MainWindow(QMainWindow):
         # Populate each tab with placeholder content
         self.populate_tab(self.map_editor, "Map Editing Tools Here")
         self.setup_npc_editor()
-        self.populate_tab(self.item_editor, "Item Editing Tools Here")
-        self.populate_tab(self.quest_editor, "Quest Editing Tools Here")
+        self.setup_item_editor()
+        self.setup_quest_editor()
         self.populate_settings_tab()
 
     def setup_npc_editor(self):
@@ -196,24 +200,6 @@ class MainWindow(QMainWindow):
 
         filepath = "files/game_data/game_templates/cyberpunk_adventure/npcs/"
 
-        # Custom NPCs Section
-        custom_npc_widget = QWidget()
-        custom_npc_layout = QVBoxLayout(custom_npc_widget)
-
-        for root, dirs, files in os.walk(filepath + "custom"):
-            for file in files:
-                if file.endswith(".json"):
-                    w = QJsonWidget(display="ui", filename=os.path.join(root, file))
-                    w.setMinimumHeight(100)
-                    custom_npc_layout.addWidget(w)
-
-        # Button for adding new Custom NPCs
-        new_custom_npc_button = QPushButton("+ New")
-        new_custom_npc_button.clicked.connect(self.add_new_custom_npc)
-        custom_npc_layout.addWidget(new_custom_npc_button)
-
-        npc_toolbox.addItem(custom_npc_widget, "Custom NPCs")
-
         # NPC Templates Section
         npc_template_widget = QWidget()
         npc_template_layout = QVBoxLayout(npc_template_widget)
@@ -221,6 +207,7 @@ class MainWindow(QMainWindow):
         for root, dirs, files in os.walk(filepath + "template"):
             for file in files:
                 if file.endswith(".json"):
+
                     npc_template_layout.addWidget(
                         QJsonWidget(display="ui", filename=os.path.join(root, file))
                     )
@@ -232,6 +219,24 @@ class MainWindow(QMainWindow):
 
         npc_toolbox.addItem(npc_template_widget, "NPC Templates")
 
+        # Custom NPCs Section
+        custom_npc_widget = QWidget()
+        custom_npc_layout = QVBoxLayout(custom_npc_widget)
+
+        for root, dirs, files in os.walk(filepath + "custom"):
+            for file in files:
+                if file.endswith(".json"):
+                    custom_npc_layout.addWidget(
+                        QJsonWidget(display="ui", filename=os.path.join(root, file))
+                    )
+
+        # Button for adding new Custom NPCs
+        new_custom_npc_button = QPushButton("+ New")
+        new_custom_npc_button.clicked.connect(self.add_new_custom_npc)
+        custom_npc_layout.addWidget(new_custom_npc_button)
+
+        npc_toolbox.addItem(custom_npc_widget, "Custom NPCs")
+
     def add_new_custom_npc(self):
         # Placeholder method for adding a new Custom NPC
         print("Adding new Custom NPC...")
@@ -239,6 +244,83 @@ class MainWindow(QMainWindow):
     def add_new_npc_template(self):
         # Placeholder method for adding a new NPC Template
         print("Adding new NPC Template...")
+
+    def setup_item_editor(self):
+        layout = QVBoxLayout(self.item_editor)
+
+        # Create the toolbox and sections
+        item_toolbox = QToolBox()
+        layout.addWidget(item_toolbox)
+        layout.addWidget(item_toolbox, alignment=Qt.AlignmentFlag.AlignTop)
+
+        filepath = "files/game_data/game_templates/cyberpunk_adventure/items/"
+
+        # item Templates Section
+        item_template_widget = QWidget()
+        item_template_layout = QVBoxLayout(item_template_widget)
+
+        for root, dirs, files in os.walk(filepath + "template"):
+            for file in files:
+                if file.endswith(".json"):
+
+                    item_template_layout.addWidget(
+                        QJsonWidget(display="ui", filename=os.path.join(root, file))
+                    )
+
+        # Button for adding new item Templates
+        new_item_template_button = QPushButton("+ New")
+        new_item_template_button.clicked.connect(self.add_new_item_template)
+        item_template_layout.addWidget(new_item_template_button)
+
+        item_toolbox.addItem(item_template_widget, "Item Templates")
+
+        # Custom items Section
+        custom_item_widget = QWidget()
+        custom_item_layout = QVBoxLayout(custom_item_widget)
+
+        for root, dirs, files in os.walk(filepath + "custom"):
+            for file in files:
+                if file.endswith(".json"):
+                    custom_item_layout.addWidget(
+                        QJsonWidget(display="ui", filename=os.path.join(root, file))
+                    )
+
+        # Button for adding new Custom items
+        new_custom_item_button = QPushButton("+ New")
+        new_custom_item_button.clicked.connect(self.add_new_custom_item)
+        custom_item_layout.addWidget(new_custom_item_button)
+
+        item_toolbox.addItem(custom_item_widget, "Custom Items")
+
+    def add_new_custom_item(self):
+        # Placeholder method for adding a new Custom item
+        print("Adding new Custom Item...")
+
+    def add_new_item_template(self):
+        # Placeholder method for adding a new Item Template
+        print("Adding new Item Template...")
+
+    def setup_quest_editor(self):
+        layout = QVBoxLayout(self.quest_editor)
+
+        filepath = "files/game_data/game_templates/cyberpunk_adventure/quests/"
+
+        for root, dirs, files in os.walk(filepath):
+            for file in files:
+                if file.endswith(".json"):
+
+                    layout.addWidget(
+                        QJsonWidget(display="ui", filename=os.path.join(root, file))
+                    )
+
+        # Button for adding new quest Templates
+        new_quest_button = QPushButton("+ New")
+        new_quest_button.clicked.connect(self.add_new_quest)
+        layout.addWidget(new_quest_button)
+
+    def add_new_quest(self):
+        # Placeholder method for adding a new Quest
+        print("Adding new Quest...")
 
     def populate_tab(self, tab_widget, content):
         layout = QVBoxLayout(tab_widget)
@@ -286,7 +368,7 @@ class MainWindow(QMainWindow):
         settings_toolbox.addItem(script_settings_widget, "Script Settings")
 
     def populate_project_tree(self):
-        root_directory = "files/game_data/templates/" + self.project_name
+        root_directory = "files/game_data/game_templates/" + self.project_name
         self.project_tree_view.clear()  # Clear existing items if any
         root_item = QTreeWidgetItem(
             self.project_tree_view, [os.path.basename(root_directory)]
@@ -306,16 +388,30 @@ class MainWindow(QMainWindow):
 
     def process_ai_command(self):
         command = self.ai_text_input.text()
-        response = (
-            f"Processing command: {command}"  # Placeholder for AI processing logic
-        )
+        self.ai_text_output.append(f">>> {command}")
+        response = f"{self.gui.parent.gpt.process_user_input(command)}"
         self.ai_text_output.append(response)
+        temp = self.ai_text_output.toPlainText()
         self.ai_text_input.clear()
+        self.init_ui()
+        self.ai_text_output.setPlainText(temp)
 
     def change_theme_color(self):
         color = QColorDialog.getColor()
         if color.isValid():
             print(f"Chosen color: {color.name()}")  # Example action
+
+    def toggle_json_view(self):
+        current_tab = self.tab_widget.currentWidget()
+        if isinstance(current_tab, QWidget):
+            json_widgets = current_tab.findChildren(QJsonWidget)
+            for widget in json_widgets:
+                if widget.display == "json":
+                    widget.display = "ui"
+                else:
+                    widget.display = "json"
+                widget.clear_layout(widget.layout())
+                widget.init_ui(widget.layout())
 
 
 class QJsonWidget(QWidget):
@@ -332,9 +428,11 @@ class QJsonWidget(QWidget):
 
         self.init_ui()
 
-    def init_ui(self):
-        self.setLayout(QVBoxLayout(self))
-        layout = self.layout()
+    def init_ui(self, layout=None):
+
+        if layout is None:
+            self.setLayout(QVBoxLayout(self))
+            layout = self.layout()
 
         self.title = QLabel(self.content.get("name", "Untitled"))
 
@@ -405,38 +503,51 @@ class QJsonText(QTextEdit):
 
 
 class QJsonUI(QWidget):
-    def __init__(self, parent, content=None):
+    def __init__(self, parent, content=None, index=[]):
         super().__init__(parent)
 
+        self.index = index
         self.content = content
 
         self.init_ui()
 
-    def init_ui(self):
-        self.setLayout(QVBoxLayout(self))
-        layout = self.layout()
+    def init_ui(self, layout=None):
+        if layout is None:
+            self.setLayout(QVBoxLayout(self))
+            layout = self.layout()
+        self.stuff = []
 
+        index = self.index.copy()
         for key, value in self.content.items():
+            index.append(key)
             if isinstance(value, dict):
-                w = QJsonUI(self, value)
+                w = QJsonUI(self, value, index.copy())
                 layout.addWidget(w)
             elif isinstance(value, list):
                 w = QListWidget(self)
                 for item in value:
-                    w.addItem(QTreeWidgetItem(w, [item]))
+                    w.addItem(QJsonValue(w, self, index, item))
                 layout.addWidget(w)
             else:
                 w = QWidget(self)
                 w.setLayout(QHBoxLayout(w))
 
                 w.layout().addWidget(QLabel(f"{key}:"))
-                w.layout().addWidget(QLineEdit(str(value)))
+                j = QJsonValue(w, self, index.copy(), value)
+                self.stuff.append(j)
+                w.layout().addWidget(j)
                 layout.addWidget(w)
+            index.pop()
 
     def set_content(self, content):
         self.content = content
-        self.clear_layout(self.layout())
-        self.init_ui()
+        self.parent().title.setText(self.content.get("name", "Untitled"))
+
+    def setWarning(self, warning: bool):
+        if warning:
+            self.setStyleSheet("border: 1px solid red")
+        else:
+            self.setStyleSheet("")
 
     def clear_layout(self, layout):
         while layout.count():
@@ -447,8 +558,66 @@ class QJsonUI(QWidget):
                 self.clear_layout(child.layout())
 
 
-if __name__ == "__main__":
-    app = QApplication([])
-    window = MainWindow()
-    window.show()
-    app.exec()
+class QJsonValue(QLineEdit):
+
+    def __init__(self, parent, json_ui, index, content=None):
+        super().__init__(parent)
+
+        self.json_ui = json_ui
+        self.index = index
+        self.content = content
+        self.setText(str(self.content))
+
+    @property
+    def value(self):
+        val = self.text()
+        if val.isdigit():
+            val = int(val)
+        elif val.replace(".", "", 1).isdigit():
+            val = float(val)
+        elif val.lower() == "true":
+            val = True
+        elif val.lower() == "false":
+            val = False
+        elif val.lower() == "null":
+            val = None
+        elif val.startswith('"') and val.endswith('"'):
+            val = val[1:-1]
+        elif val.startswith("[") and val.endswith("]"):
+            val = val[1:-1].split(", ")
+        elif val.startswith("{") and val.endswith("}"):
+            val = json.loads(val)
+
+        return val
+
+    def set_content(self, content):
+        self.content = content
+        self.setText(str(self.content))
+
+    def focusInEvent(self, event):
+        super().focusInEvent(event)
+
+    def focusOutEvent(self, event):
+        try:
+            new_content = self.json_ui.content.copy()
+            item = new_content
+            for i in range(len(self.index) - 1):
+                item = item[self.index[i]]
+            item[self.index[-1]] = self.value
+
+            self.json_ui.set_content(new_content)
+            self.json_ui.setWarning(False)
+        except json.JSONDecodeError:
+            self.json_ui.setWarning(True)
+        super().focusOutEvent(event)
+
+
+class Gui:
+    def __init__(self, parent):
+        self.parent = parent
+        self.app = QApplication([])
+        self.window = MainWindow(self)
+
+    def run(self):
+        self.window.show()
+        self.app.exec()

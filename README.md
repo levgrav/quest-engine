@@ -1,6 +1,6 @@
 # Quest Engine
 
-Version: 0.0.0 - Initial Commit
+Version: 0.1.0 - AI integration
 
 This repository will contain an AI enhanced, text-adventure game engine that will allow users to create open world text adventures with the help of an LLM and play them with features that add more interacitveness and immersion using an LLM. 
 
@@ -14,7 +14,8 @@ This repository will contain an AI enhanced, text-adventure game engine that wil
 
 ## Requirements
 
-- Python 3
+- Python 3 
+- openai (you will need you own API key)
 
 ### Dependencies
 - openai (GPT) 
