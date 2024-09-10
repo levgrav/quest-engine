@@ -1,0 +1,212 @@
+[
+    {
+        "type": "function",
+        "function": {
+            "name": "create_project",
+            "description": "Creates a new project with the given name",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "Name of the project"
+                    }
+                },
+                "required": [
+                    "name"
+                ]
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "delete_project",
+            "description": "Deletes a project with the given name",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "Name of the project"
+                    }
+                }
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "list_projects",
+            "description": "Lists all projects in the current directory"
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "change_project",
+            "description": "Changes the current project to the one with the given name",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "Name of the project"
+                    }
+                },
+                "required": [
+                    "name"
+                ]
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "create_file",
+            "description": "Creates a file with the given name and content (must be in a project)",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "Name of the file"
+                    },
+                    "content": {
+                        "type": "string",
+                        "description": "Content of the file"
+                    }
+                },
+                "required": [
+                    "name"
+                ]
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "read_file",
+            "description": "Reads the content of a file with the given name (must be in a project)",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "Name of the file"
+                    }
+                },
+                "required": [
+                    "name"
+                ]
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "append_file",
+            "description": "Appends content to a file with the given name (must be in a project)",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "Name of the file"
+                    },
+                    "content": {
+                        "type": "string",
+                        "description": "Content to append"
+                    }
+                },
+                "required": [
+                    "name",
+                    "content"
+                ]
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "delete_file",
+            "description": "Deletes a file with the given name (must be in a project)",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "Name of the file"
+                    }
+                },
+                "required": [
+                    "name"
+                ]
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "list_files",
+            "description": "Lists all files in the current directory (must be in a project)",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "path": {
+                        "type": "string",
+                        "description": "Path to the directory (within the project)"
+                    }
+                },
+                "required": [
+                    "path"
+                ]
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "create_folder",
+            "description": "Creates a folder with the given name (must be in a project)",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "Name of the folder"
+                    }
+                },
+                "required": [
+                    "name"
+                ]
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "delete_folder",
+            "description": "Deletes a folder with the given name (must be in a project)",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "Name of the folder"
+                    }
+                },
+                "required": [
+                    "name"
+                ]
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "quit_program",
+            "description": "Quits the program"
+        }
+    }
+]
