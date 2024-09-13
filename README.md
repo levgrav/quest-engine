@@ -1,6 +1,6 @@
 # Quest Engine
 
-Version: 0.1.0 - AI integration
+Version: 0.1.1 - AI integration
 
 This repository will contain an AI enhanced, text-adventure game engine that will allow users to create open world text adventures with the help of an LLM and play them with features that add more interacitveness and immersion using an LLM. 
 
@@ -14,7 +14,7 @@ This repository will contain an AI enhanced, text-adventure game engine that wil
 
 ## Requirements
 
-- Python 3 
+- Python 3.12 or later
 - openai (you will need you own API key)
 
 ### Dependencies
@@ -26,6 +26,10 @@ NOTE: I hope to one day be able to run the LLM locally, but we'll have to wait f
 To use quest engine, clone this repository.
 
 `git clone https://github.com/levgrav/guest-engine.git`
+
+As of right now ony the `quest-engine-create` application exists. To run it, run `src/quest-engine-create/main.py`
+
+You will need to create a file called `openai_api_key.txt` in the base directory with a valid API key in order to use any of the LLM features
 
 ## Lisence
 

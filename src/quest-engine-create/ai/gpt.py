@@ -5,7 +5,10 @@ from ai.gpt_functions import Gpt_Functions
 
 
 class Gpt:
-    def __init__(self) -> None:
+    def __init__(self, project_model) -> None:
+
+        self.project_model = project_model
+        self.functions = Gpt_Functions(project_model)
 
         with open("openai_api_key.txt") as f:
             self.key = f.readline().strip()
@@ -22,14 +25,6 @@ class Gpt:
         # Define the function in the format expected by the OpenAI API
         with open(r"src\quest-engine-create\ai\tools.json") as f:
             self.tools = json.load(f)
-
-        self.sys_args = {
-            "parent_dir": r"files\game_data\game_templates",
-            "done": False,
-            "project": None,
-        }
-
-        Gpt_Functions.sys_args = self.sys_args
 
     # --- Functions --- #
     def get_response(self):
@@ -80,7 +75,7 @@ class Gpt:
 
                 # Execute the function
                 try:
-                    result = Gpt_Functions.__dict__[call.function.name](
+                    result = self.functions.__getattribute__(call.function.name)(
                         **json.loads(call.function.arguments)
                     )
                 except Exception as e:
