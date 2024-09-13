@@ -21,7 +21,7 @@ icon
 
 ### Fixed
 
-## [0.1.0] - 2024-04-13
+## [0.1.0] - 2024-09-11
   
 AI integration - Extremely buggy
  
@@ -32,4 +32,20 @@ AI interation using GPT 4o mini
 ### Changed
 
 ### Fixed
+
+## [0.1.1] - 2024-09-13
+  
+Refactor to comply with View-Model framework
+ 
+### Added
+
+- manual project controls
+
+### Changed
+
+- refactor to comply with View-Model framework
+
+### Fixed
+
+- so many bugs I can't even keep track
 
