@@ -49,3 +49,15 @@ Refactor to comply with View-Model framework
 
 - so many bugs I can't even keep track
 
+## [0.1.2] - 2024-09-30
+  
+Added GUI for Quest Engine Play
+ 
+### Added
+
+- GUI for QE Play
+
+### Changed
+
+### Fixed
+

@@ -26,6 +26,8 @@ from PyQt6.QtWidgets import (
 from PyQt6.QtGui import QIcon, QKeySequence, QAction
 from PyQt6.QtCore import Qt
 import os
+import sys
+import ctypes
 from view.json_components import QJsonWidget, QJsonUI, QJsonText, QJsonValue
 from view.project_manager import ProjectManager
 from view.ai_manager import AIManager
@@ -39,7 +41,10 @@ class MainWindow(QMainWindow):
         self.view_model = view_model
         self.setWindowTitle("Quest Engine Create")
 
-        self.setWindowIcon(QIcon("files\icon\icon1.png"))
+        self.setWindowIcon(QIcon(r"files\icon\icon.svg"))
+        if sys.platform == "win32":
+            ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID("myappid")
+
         self.setGeometry(100, 100, 1200, 800)  # Adjust size as needed
 
         self.ui_manager = UIManager(self)

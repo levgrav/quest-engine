@@ -1,6 +1,6 @@
 # Quest Engine
 
-Version: 0.1.1 - AI integration
+Version: 0.1.2 - AI integration
 
 This repository will contain an AI enhanced, text-adventure game engine that will allow users to create open world text adventures with the help of an LLM and play them with features that add more interacitveness and immersion using an LLM. 
 
