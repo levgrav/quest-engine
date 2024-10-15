@@ -37,5 +37,5 @@ class ProjectViewModel(QObject):
     def process_command(self, command):
         """Process the command entered by the player."""
         # Interact with the model for game logic
-        response = self._model.process_command(command)
+        response = self._model.process_ai_command(command)
         self.ai_response_ready.emit(response)

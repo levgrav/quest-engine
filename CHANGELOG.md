@@ -61,3 +61,25 @@ Added GUI for Quest Engine Play
 
 ### Fixed
 
+## [0.1.3] - 2024-10-14
+
+Finished GUI (for now)
+
+### Added
+
+Fleshed out GUI for Quest Engine play including three pages:
+- Main menu
+- Game Select
+- Game
+As well an navigation between them
+
+Also added a todo list
+
+### Changed
+
+The GUI for Quest engine play
+
+### Fixed
+
+Many things
+

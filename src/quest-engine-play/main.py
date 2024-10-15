@@ -9,6 +9,9 @@ import sys
 
 def main():
     app = QApplication(sys.argv)
+    
+    with open("files/stylesheets/style.qss", "r") as file:
+        app.setStyleSheet(file.read())
 
     # Initialize the model
     model = ProjectModel()

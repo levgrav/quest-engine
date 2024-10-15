@@ -1,0 +1,175 @@
+/* Colors
+--shuttle-gray: #545c6b;
+--dark-shuttle-gray: #2c333a; 
+--ecstasy: #fa6d12;
+--sun: #faac0c;
+--tumbleweed: #dcb484;
+--desaturated-dark-brown: #2a1c14;
+--desaturated-tan: #806245;
+--neutral-gray: #dcdcdc;  
+--rich-brown: #5a3921;
+--mirage: #111525;
+*/
+
+/* Logo Overlay */
+QWidget#overlay {
+    background-color: rgba(44, 51, 58, 0.8);  /* Dark Shuttle Gray (#2c333a) with 80% opacity */
+    border-radius: 15px;
+    padding: 12px;
+}
+
+/* Text on Logo Overlay - Neutral Gray */
+QLabel#overlay_text {
+    font-size: 54px;
+    font-family: 'Cinzel';
+    font-weight: bold;
+    color: #dcdcdc;  /* Neutral Gray (#dcdcdc) for text on dark overlay */
+}
+
+/* General Label Styles */
+QLabel {
+    font-size: 16px;
+    color: #dcb484;  /* Tumbleweed (#dcb484) for general text */
+}
+
+/* Section Labels */
+QLabel#section_label {
+    font-weight: bold;
+    font-size: 18px;
+    color: #faac0c;  /* Sun (#faac0c) for section headers */
+}
+
+/* Main Title Label */
+QLabel#title {
+    font-size: 54px;
+    font-family: 'Cinzel';
+    font-weight: bold;
+    color: #fa6d12;  /* Ecstasy (#fa6d12) for main title */
+}
+
+/* Smaller Titles */
+QLabel#small_title {
+    font-size: 36px;
+    font-family: 'Cinzel';
+    font-weight: bold;
+    color: #faac0c;  /* Sun (#faac0c) */
+}
+
+/* Default Message */
+QLabel#default_message {
+    font-size: 16px;
+    color: #677a78;  /* Sirocco (#677a78) for default message */
+}
+
+/* Center Panel Frame - Game Select Page */
+QFrame#center_panel_frame {
+    background-color: #806245;  /* Desaturated Tan (#806245) */
+    border-radius: 12px;
+    padding: 15px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Center Panel Title */
+QWidget#center_panel_title_frame {
+    background-color: #dcb484;  /* Tumbleweed (#dcb484) */
+    padding: 8px;
+    border-radius: 8px;
+}
+QLabel#center_panel_title {
+    font-weight: bold;
+    font-size: 22px;
+    color: #2a1c14;  /* Desaturated Dark Brown (#2a1c14) */
+}
+
+/* Main Menu Button */
+QPushButton#main_menu_button {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 24px;
+    padding: 15px;
+    background-color: rgba(42, 28, 20, 0.8);  /* Desaturated Dark Brown (#2a1c14) */
+    color: #ecf0f1;
+    border: 2px solid #5a3921;  /* Rich Dark Brown (#5a3921) for border */
+    border-radius: 10px;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+QPushButton#main_menu_button:hover {
+    background-color: rgba(90, 57, 33, 0.8);  /* Lighter desaturated brown on hover */
+    border-color: #dcb484;  /* Tumbleweed (#dcb484) on hover */
+}
+
+/* Download Button */
+QPushButton#download_button {
+    font-size: 16px;
+    padding: 12px;
+    background-color: #fa6d12;
+    color: #ecf0f1;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+    border: none;
+}
+QPushButton#download_button:hover {
+    background-color: #faac0c;
+}
+
+/* Back Button */
+QPushButton#back_button {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 20px;
+    padding: 12px;
+    background-color: rgba(42, 28, 20, 0.8);
+    color: #ecf0f1;
+    border: 2px solid #5a3921;
+    border-radius: 10px;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+QPushButton#back_button:hover {
+    background-color: rgba(90, 57, 33, 0.8);
+    border-color: #dcb484;
+}
+
+QPushButton#settings_button {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 20px;
+    padding: 12px;
+    background-color: rgba(42, 28, 20, 0.8);
+    color: #ecf0f1;
+    border: 2px solid #5a3921;
+    border-radius: 10px;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+QPushButton#settings_button:hover {
+    background-color: rgba(90, 57, 33, 0.8);
+    border-color: #dcb484;
+}
+
+/* Play Button */
+QPushButton#play_button {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 24px;
+    padding: 15px;
+    background-color: #fa6d12;
+    color: #ecf0f1;
+    border: 2px solid #faac0c;
+    border-radius: 10px;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+QPushButton#play_button:hover {
+    background-color: #faac0c;
+    border-color: #dcb484;
+}
+
+/* Create Game Button */
+QPushButton#create_game_button {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 24px;
+    padding: 15px;
+    background-color: #dcb484;
+    color: #2a1c14;
+    border: 2px solid #806245;
+    border-radius: 10px;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+QPushButton#create_game_button:hover {
+    background-color: #faac0c;
+    border-color: #dcb484;
+}

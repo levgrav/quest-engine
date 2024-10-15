@@ -1,0 +1,41 @@
+Core Gameplay
+ - Implement text command handling for player movement and actions.
+ - Develop AI-driven decision logic for NPC interactions and environmental events.
+ - Define combat mechanics (turn-based system with AI-managed time progression).
+ - Ensure the notes system is functional (automatic and manual note entries).
+ - Create inventory management with side-panel display and equipment functionality.
+Data Structures and File Management
+ - Finalize world structure with:
+ - Nested location directories.
+ - Integrated features in location JSON files.
+ - Route connections between sub-locations.
+ - Standardize player JSON structure (single-file format for attributes, status, inventory, and progress).
+ - Create sample game templates to showcase how JSON files are structured.
+AI Logic and Interactions
+ - Program AI for dynamic content creation (events, NPC behavior, random encounters).
+ - Implement AI feedback handling for invalid or ambiguous player input.
+ - Design AI decision-making for time progression (e.g., travel time adjustment based on weather).
+ - Integrate world state tracking to reflect changes (e.g., burned towns, cleared dungeons).
+UI and Panels
+ - Implement side panels:
+ - Left panel for personal data (attributes, skills, status effects).
+ - Right panel for environmental information (time, weather, etc.).
+ - Develop command interface for smooth input handling (with AI fallback for invalid commands).
+Saving, Loading, and World Continuity
+ - Implement save-on-exit functionality (player progress saved automatically).
+ - Ensure game-over handling (no reload after character death).
+ - Test AI warnings for soft-lock scenarios (e.g., skipping critical quests or events).
+Testing and Debugging
+ - Test edge-case handling (e.g., interactions with non-existent objects).
+ - Add debugging tools to monitor game state and events in real-time.
+ - Validate JSON schema to ensure correct data formatting.
+Future Enhancements (Optional)
+ - Explore multiplayer support for future versions.
+ - Consider adding magic systems, factions, or alignment tracking as simple text-based attributes.
+ - Plan for optimizations (incremental data loading, safeguards on event generation).
+
+
+
+
+
+

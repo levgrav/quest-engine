@@ -37,12 +37,12 @@ class MainMenuPage(Page):
 
         # Create buttons (Play, Settings, Donate, Quit)
         play_button = self.create_button(
-            "Play", 545, lambda: self.view_model.show_page("game_select")
+            "Play", width=545, callback=lambda: self.view_model.show_page("game_select"), object_name="main_menu_button"
         )
-        settings_button = self.create_button("Settings", 265)
-        donate_button = self.create_button("Donate", 265)
-        quit_button = self.create_button("Quit Game", 545, QApplication.quit)
-
+        settings_button = self.create_button("Settings", 265, object_name="main_menu_button")
+        donate_button = self.create_button("Donate", 265, object_name="main_menu_button")
+        quit_button = self.create_button("Quit Game", 545, callback=QApplication.quit, object_name="main_menu_button")
+        
         # Add buttons to layouts
         button_layout = QHBoxLayout()
         button_layout.addWidget(settings_button)
@@ -60,14 +60,6 @@ class MainMenuPage(Page):
         """Create the dark overlay with icon and title."""
         overlay = QWidget(self)
         overlay.setObjectName("overlay")
-        overlay.setStyleSheet(
-            """
-            QWidget#overlay {
-                background-color: rgba(0, 0, 0, 0.6); 
-                border-radius: 15px;
-            }
-        """
-        )
         overlay_layout = QHBoxLayout(overlay)
         overlay_layout.setContentsMargins(30, 20, 30, 20)
 
@@ -81,14 +73,7 @@ class MainMenuPage(Page):
 
         # Title ("uest Engine")
         title_label = QLabel("uest Engine")
-        title_label.setStyleSheet(
-            """
-            font-size: 54px;
-            font-family: 'Cinzel';
-            font-weight: bold;
-            color: white;
-        """
-        )
+        title_label.setObjectName("title")
         overlay_layout.addWidget(title_label)
 
         return overlay

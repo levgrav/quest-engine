@@ -1,7 +1,8 @@
 import os
 from PyQt6.QtWidgets import (
-    QWidget, QVBoxLayout, QLabel, QListWidget, QSplitter, QStackedWidget, QPushButton
+    QWidget, QVBoxLayout, QLabel, QListWidget, QSplitter, QStackedWidget, QPushButton, QHBoxLayout, QFrame
 )
+from PyQt6.QtGui import QPixmap
 from PyQt6.QtCore import Qt
 from view.page import Page
 
@@ -19,7 +20,54 @@ class GameSelectPage(Page):
         """Initialize the UI layout for the Game Select page."""
         layout = QVBoxLayout(self)
 
-        # Horizontal splitter to separate the left and center panels
+        # --- Top Bar: Logo (Left) and Back Button (Right) ---
+        top_bar = QWidget()
+        top_bar_layout = QHBoxLayout(top_bar)
+        top_bar_layout.setContentsMargins(20, 15, 20, 15)  # Increased margins
+        top_bar_layout.setSpacing(10)
+
+        # Limit the height of the top bar
+        top_bar.setFixedHeight(120)
+
+        # --- Logo Overlay on the Left ---
+        overlay = QWidget(top_bar)
+        overlay.setObjectName("overlay")
+        overlay_layout = QHBoxLayout(overlay)
+        overlay_layout.setContentsMargins(20, 10, 20, 10)  # Adjusted inner padding
+
+        # Icon (Q)
+        icon_label = QLabel(self)
+        pixmap = QPixmap("files/icon/icon_transparent.svg").scaled(
+            60, 60, Qt.AspectRatioMode.KeepAspectRatio
+        )
+        icon_label.setPixmap(pixmap)
+        overlay_layout.addWidget(icon_label)
+
+        # Title ("uest Engine")
+        title_label = QLabel("uest Engine")
+        title_label.setObjectName("small_title")
+        overlay_layout.addWidget(title_label)
+
+        # Add the logo (overlay) to the top bar on the left
+        top_bar_layout.addWidget(overlay)
+        top_bar_layout.addStretch()
+
+        # --- Back Button (Right) ---
+        self.back_button = self.create_button(
+            "Back", width=150, callback=lambda: self.view_model.show_page("main_menu"), object_name="back_button"
+        )
+        top_bar_layout.addWidget(self.back_button)
+
+        self.settings_button = self.create_button(
+            "", width=55, height=55, object_name="settings_button", icon="files/icon/settings.svg"
+        )
+        self.settings_button.setIconSize(self.settings_button.size() * 0.5)
+        top_bar_layout.addWidget(self.settings_button)
+        
+        # Add the top bar to the main layout
+        layout.addWidget(top_bar)
+
+        # --- Horizontal Splitter: Left Panel and Center Panel ---
         splitter = QSplitter(Qt.Orientation.Horizontal)
 
         # Left panel (Load Game and New Game sections)
@@ -28,6 +76,7 @@ class GameSelectPage(Page):
 
         # Load Game section
         load_label = QLabel("Load Game")
+        load_label.setObjectName("section_label")
         self.saved_games_list = QListWidget()
         self.populate_saved_games()
         left_panel_layout.addWidget(load_label)
@@ -35,22 +84,45 @@ class GameSelectPage(Page):
 
         # New Game section
         new_game_label = QLabel("New Game")
+        new_game_label.setObjectName("section_label")
         self.game_templates_list = QListWidget()
         self.populate_game_templates()
         left_panel_layout.addWidget(new_game_label)
         left_panel_layout.addWidget(self.game_templates_list)
 
+        # --- Download More Content Button ---
+        download_button = QPushButton("Download More Content")
+        download_button.setObjectName("download_button")
+        download_button.clicked.connect(self.download_more_content)  # Dummy function
+        left_panel_layout.addWidget(download_button, alignment=Qt.AlignmentFlag.AlignCenter)
+
         # Add left panel to the splitter
         splitter.addWidget(left_panel)
 
-        # Center panel with QStackedWidget for different views
+        # --- Framed Center Panel with Shades ---
+        center_panel_frame = QFrame()
+        center_panel_frame.setObjectName("center_panel_frame")
+        center_panel_layout = QVBoxLayout(center_panel_frame)
+
+        # Center panel title with a slightly lighter background
+        center_panel_title_frame = QWidget()
+        center_panel_title_frame.setObjectName("center_panel_title_frame")
+        center_panel_title_layout = QVBoxLayout(center_panel_title_frame)
+        center_panel_title = QLabel("Game Details")
+        center_panel_title.setObjectName("center_panel_title")
+        center_panel_title_layout.addWidget(center_panel_title, alignment=Qt.AlignmentFlag.AlignCenter)
+
+        # Add the title frame to the center panel layout
+        center_panel_layout.addWidget(center_panel_title_frame)
+
+        # Center panel with QStackedWidget for dynamic content
         self.center_panel = QStackedWidget()
 
         # Default view when nothing is selected
         self.default_view = QWidget()
         default_layout = QVBoxLayout(self.default_view)
         self.default_message_label = QLabel("Select a save or create a new game to play")
-        self.default_message_label.setWordWrap(True)
+        self.default_message_label.setObjectName("default_message")
         default_layout.addWidget(self.default_message_label)
         self.center_panel.addWidget(self.default_view)
 
@@ -58,40 +130,36 @@ class GameSelectPage(Page):
         self.saved_game_view = QWidget()
         saved_game_layout = QVBoxLayout(self.saved_game_view)
         self.saved_game_info_label = QLabel("Saved game details here")
-        self.saved_game_info_label.setWordWrap(True)
+        self.saved_game_info_label.setObjectName("saved_game_info")
         self.saved_game_play_button = self.create_button(
-            "Play Game", 545, lambda: self.view_model.show_page("game")
+            "Play Game", 545, callback=lambda: self.view_model.show_page("game"), object_name="play_button"
         )
         saved_game_layout.addWidget(self.saved_game_info_label)
-        saved_game_layout.addWidget(self.saved_game_play_button)
+        saved_game_layout.addWidget(self.saved_game_play_button, alignment=Qt.AlignmentFlag.AlignCenter)
         self.center_panel.addWidget(self.saved_game_view)
 
         # View when a game template is selected
         self.template_view = QWidget()
         template_layout = QVBoxLayout(self.template_view)
         self.template_info_label = QLabel("Game template details here")
-        self.template_info_label.setWordWrap(True)
         self.template_create_button = self.create_button(
-            "Create Game", 545, lambda: self.view_model.show_page("game")
+            "Create Game", 545, callback=lambda: self.view_model.show_page("game"), object_name="create_game_button"
         )
         template_layout.addWidget(self.template_info_label)
-        template_layout.addWidget(self.template_create_button)
+        template_layout.addWidget(self.template_create_button, alignment=Qt.AlignmentFlag.AlignCenter)
         self.center_panel.addWidget(self.template_view)
 
         # Set the default view as the current view
         self.center_panel.setCurrentWidget(self.default_view)
 
-        # Add center panel (QStackedWidget) to the splitter
-        splitter.addWidget(self.center_panel)
+        # Add center panel (QStackedWidget) to the framed layout
+        center_panel_layout.addWidget(self.center_panel)
+
+        # Add the framed center panel to the splitter
+        splitter.addWidget(center_panel_frame)
 
         # Add the splitter to the main layout
         layout.addWidget(splitter)
-
-        # Back button
-        self.back_button = self.create_button(
-            "Back", 545, lambda: self.view_model.show_page("main_menu")
-        )
-        layout.addWidget(self.back_button, alignment=Qt.AlignmentFlag.AlignCenter)
 
         self.setLayout(layout)
 
@@ -115,30 +183,29 @@ class GameSelectPage(Page):
                 if file_name.endswith(".template"):  # Assuming templates have a .template extension
                     self.game_templates_list.addItem(file_name)
 
+    def download_more_content(self):
+        """Handle the download content button click."""
+        print("Download More Content button clicked!")
+
     def on_selection_changed(self):
         """Handle when a saved game or template is selected."""
         selected_saved_game = self.saved_games_list.selectedItems()
         selected_template = self.game_templates_list.selectedItems()
 
-        # Prioritize handling new selections
         if self.saved_games_list.hasFocus() and selected_saved_game:
-            # Clear the template selection if a saved game was selected
+            # Clear the template selection
             self.game_templates_list.clearSelection()
 
             # Display details about the selected saved game
             file_name = selected_saved_game[0].text()
-            self.show_file_details(
-                f"files/game_data/saves/games/{file_name}", is_template=False
-            )
+            self.show_file_details(f"files/game_data/saves/games/{file_name}", is_template=False)
         elif self.game_templates_list.hasFocus() and selected_template:
-            # Clear the saved game selection if a game template was selected
+                        # Clear the saved game selection
             self.saved_games_list.clearSelection()
 
             # Display details about the selected template
             file_name = selected_template[0].text()
-            self.show_file_details(
-                f"files/game_data/game_templates/{file_name}", is_template=True
-            )
+            self.show_file_details(f"files/game_data/game_templates/{file_name}", is_template=True)
         else:
             # Nothing selected, show default message
             self.center_panel.setCurrentWidget(self.default_view)
@@ -156,3 +223,4 @@ class GameSelectPage(Page):
             else:
                 self.saved_game_info_label.setText(details)
                 self.center_panel.setCurrentWidget(self.saved_game_view)
+
