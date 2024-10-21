@@ -82,4 +82,19 @@ The GUI for Quest engine play
 ### Fixed
 
 Many things
+## [0.1.4] - 2024-10-21
+
+Minor bugfix
+
+### Added
+
+Empty openai_api_key.txt
+
+### Changed
+
+README.md is now up to date
+
+### Fixed
+
+API key issue
 

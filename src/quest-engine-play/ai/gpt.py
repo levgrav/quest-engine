@@ -19,7 +19,7 @@ class Gpt:
 
         self.messages = [
             {"role": "system", "content": self.system_message}
-        ]  # TEMPORARY
+        ]
 
         # --- Variables --- #
         # Define the function in the format expected by the OpenAI API
