@@ -1,7 +1,7 @@
 # viewmodel.py
 from PyQt6.QtCore import QObject, pyqtSignal
 from PyQt6.QtWidgets import QWidget
-
+import json
 
 class ProjectViewModel(QObject):
     debug_info = pyqtSignal(str)
@@ -12,7 +12,7 @@ class ProjectViewModel(QObject):
         super().__init__()
         self._model = model
         self.pages = {}
-        self.debug_info.connect(print)
+        self.debug_info.connect(model.log.log)
         self.debug_info.emit("View Model Initialized...")
 
     def register_page(self, page_name, page):
@@ -34,8 +34,10 @@ class ProjectViewModel(QObject):
         # Logic to start the game
         self.debug_info.emit(f"Starting {game_name}...")
 
-    def process_command(self, command):
+    def process_command(self, command, debug=False):
         """Process the command entered by the player."""
         # Interact with the model for game logic
         response = self._model.process_ai_command(command)
+        if debug:
+            self.debug_info.emit(json.dumps(self._model.gpt.messages, indent=4))
         self.ai_response_ready.emit(response)

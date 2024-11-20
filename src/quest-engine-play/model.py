@@ -1,14 +1,18 @@
 # model.py
 import json
 import ai.gpt as gpt
+from utils.logger import Log
 
 
 class ProjectModel:
-    def __init__(self, project_name=None, path=""):
-
+    def __init__(self, parent_game, project_name=None, path=""):
+        self.parent_game = parent_game
+        self.world = parent_game.world
         self.parent_dir = r"files\game_data\game_templates"
         self._project_name = project_name
         self.gpt = gpt.Gpt(self)
+        self.log = Log("files/logs/log.txt")
+        self.log.clear_log()
 
     @property
     def project_name(self):
@@ -28,5 +32,5 @@ class ProjectModel:
             return self.parent_dir
         return self.parent_dir + "/" + self._project_name
 
-    def process_ai_command(self, command):
+    def process_ai_command(self, command, debug=False):
         return self.gpt.process_user_input(command)

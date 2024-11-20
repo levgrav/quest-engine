@@ -156,7 +156,7 @@ class GamePage(Page):
         self.game_text_output.append(f">>> {command}")
 
         # Process the command through the view model
-        self.view_model.process_command(command)
+        self.view_model.process_command(command, debug=False)
 
     def update_game_output(self, text):
         """Update the story log with new game events."""

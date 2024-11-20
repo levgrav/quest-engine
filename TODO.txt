@@ -1,41 +1,185 @@
 Core Gameplay
- - Implement text command handling for player movement and actions.
- - Develop AI-driven decision logic for NPC interactions and environmental events.
- - Define combat mechanics (turn-based system with AI-managed time progression).
- - Ensure the notes system is functional (automatic and manual note entries).
- - Create inventory management with side-panel display and equipment functionality.
+- Implement text command handling for player movement and actions.
+- Develop AI-driven decision logic for NPC interactions and environmental events.
+    - AI takes command 
+        - Ex. throw a rock at the goblin
+    - AI needs to determine what objects the player is talking about
+        - check inventory, surroundings for object
+        - determine if a new object should be created in environment (interpolation)
+        - Ex. player is in forest, so ai decides to create, (interpolate) a small stone that the player will take, 
+          there is a group of goblins in the area and the ai asks the user which one. player chooses the nearest one
+    - AI needs to determine what actions to take, how long it should take
+        - Ex. actions: player picks up stone of the ground (1.5s), throws it at nearest goblin (3s)
+    - AI needs to determine outcomes:
+        - for each action, ai determines outcomes (has access to rng)
+            - Ex. rock is now in player's hand
+            - rock leaves player inventory, rng called to determine if it hits the goblin. 
+                - AI decides that 0-0.5 will miss, after 0.5 it hits and the higher it is, the more it does to the goblin
+                - rng: 0.6343 -> hits the goblin in the leg, though not very hard, so it only hurts momentarily
+            - rock hits golbin (goblin get's status effect: 'slight pain in the leg from thrown rock')
+            - golbin will notice player based on rng [0.1956] goblin looks in player's direction, but can't make out anything
+        - ai determines if anything happens during the time it takes for the action
+            - ex. rng: if 0.97 or higher, something happens (higher number means more exciting), .98 -> roll again
+                - 0.9789 -> it starts to rain, severity = (0.9789-0.97)/(1-0.97)=0.30
+        - for each decided outcome, AI calls commands to implement the result
+            - ex:
+                item = create_generic_item(
+                    location=player.current_location, 
+                    position="on the ground at " + player.position, 
+                    name="rock"
+                    properties=['throwable size']
+                )
+                move_item(
+                    from=player.current_location.inventory
+                    to=player.inventory,
+                    item=item,
+                    to_kwargs={'place': 'hand'}
+                )
+                player.action_time(seconds=1.5)
+                move_item(
+                    from=player.inventory,
+                    to=player.current_location.inventory,
+                    item=item,
+                    to_kwargs={'place':"on the ground at goblin guard location"}
+                )
+                goblin=player.current_location.find_npc(name='golbin')
+                goblin.add_status_effect("slight pain in the leg")
+                goblin.add_memory("rock hit leg coming from left, couldn't find anything")
+                player.action_time(seconds=3)
+                world.event("rain", severity=0.3, type='weather')
+- Define combat mechanics (turn-based system with AI-managed time progression).
+- Ensure the notes system is functional (automatic and manual note entries).
+    - in settings, players will control how much ai can controll their notes. (smart notes)
+    - player.notes will be a long string, displayed in an editable text-field under "notes" tab
+- Create inventory management with side-panel display and equipment functionality.
+    - inventory panel
+        - player can click on item in inventory and it will show stats
+    - player.inventory
 Data Structures and File Management
- - Finalize world structure with:
- - Nested location directories.
- - Integrated features in location JSON files.
- - Route connections between sub-locations.
- - Standardize player JSON structure (single-file format for attributes, status, inventory, and progress).
- - Create sample game templates to showcase how JSON files are structured.
+- Structure:
+    - games/:
+        - [game_name]: (multiple)
+            - [game_name].json
+                {
+                    "name": "[name]",
+                    "author": "[author]",
+                    ... #TODO
+                    "settings" {
+                        ... #TODO
+                    }
+                }
+            - world/ (location/)
+            - npcs/
+                - template/ 
+                    - [npc_name].json (multiple)
+                        {
+                            "name": "[name]",
+                            "description": "[description]"
+                            "attributes": ["[attribute]", "[attribute]", ...],
+                            "skills": ["[skill]", "[skill]", ...],
+                            "status_effects": ["effect", "effect", ...],
+                            "inventory": [
+                                
+                                {...},
+                                ...
+                            ]
+                            "current_location": "[location]/[sublocation]/..."
+                            notes: "[notes]"
+                        }
+                - custom/
+                    - [npc_name].json (multiple)
+                        {
+                            "name": "[name]",
+                            "description": "[description]"
+                            "attributes": ["[attribute]", "[attribute]", ...],
+                            "skills": ["[skill]", "[skill]", ...],
+                            "status_effects": ["effect", "effect", ...],
+                            "inventory": [
+                                
+                                {...},
+                                ...
+                            ]
+                            "current_location": "[location]/[sublocation]/..."
+                            notes: "[notes]"
+                        }
+            - items/ 
+                - template/
+                    - [item_name].json
+                        {
+                            ... #TODO
+                        }
+                - custom/
+                - [item_name].json
+                    {
+                        ... #TODO
+                    } 
+            
+
+    - players/:
+        - [player_name].json (multiple)
+        {
+            "name": "[name]",
+            "descrition": "[description]"
+            "attributes": ["[attribute]", "[attribute]", ...],
+            "skills": ["[skill]", "[skill]", ...],
+            "status_effects": ["effect", "effect", ...],
+            "inventory": [
+                
+                {...},
+                ...
+            ]
+            "current_location": "[location]/[sublocation]/..."
+            notes: "[notes]"
+        }
+- Sub Structures:
+    - item_reference
+        {
+            "type": ["template" | "custom"],
+            "name": "[name]",
+            "qty": [#qty]
+            "place": "place"
+        }
+    - npc_reference:
+        {
+            "type": ["template" | "custom"],
+            "name": "[name]",
+            "place": "place"
+        }
+    - [location]/:
+        - [location_name].json
+            {
+                #TODO
+            }
+        - [locations]/
+            - [location]/
+                ...
+            ...
+        - routes/
+            - [route_name].json
+                {
+                    #TODO
+                }
+Python Class structures
+- 
 AI Logic and Interactions
- - Program AI for dynamic content creation (events, NPC behavior, random encounters).
- - Implement AI feedback handling for invalid or ambiguous player input.
- - Design AI decision-making for time progression (e.g., travel time adjustment based on weather).
- - Integrate world state tracking to reflect changes (e.g., burned towns, cleared dungeons).
+- Program AI for dynamic content creation (events, NPC behavior, random encounters).
+- Implement AI feedback handling for invalid or ambiguous player input.
+- Design AI decision-making for time progression (e.g., travel time adjustment based on weather).
+- Integrate world state tracking to reflect changes (e.g., burned towns, cleared dungeons).
 UI and Panels
- - Implement side panels:
- - Left panel for personal data (attributes, skills, status effects).
- - Right panel for environmental information (time, weather, etc.).
- - Develop command interface for smooth input handling (with AI fallback for invalid commands).
+- Implement side panels:
+- Left panel for personal data (attributes, skills, status effects).
+- Right panel for environmental information (time, weather, etc.).
+- Develop command interface for smooth input handling (with AI fallback for invalid commands).
 Saving, Loading, and World Continuity
- - Implement save-on-exit functionality (player progress saved automatically).
- - Ensure game-over handling (no reload after character death).
- - Test AI warnings for soft-lock scenarios (e.g., skipping critical quests or events).
+- Implement save-on-exit functionality (player progress saved automatically).
+- Ensure game-over handling (no reload after character death).
+- Test AI warnings for soft-lock scenarios (e.g., skipping critical quests or events).
 Testing and Debugging
- - Test edge-case handling (e.g., interactions with non-existent objects).
- - Add debugging tools to monitor game state and events in real-time.
- - Validate JSON schema to ensure correct data formatting.
+- Test edge-case handling (e.g., interactions with non-existent objects).
+- Add debugging tools to monitor game state and events in real-time.
+- Validate JSON schema to ensure correct data formatting.
 Future Enhancements (Optional)
- - Explore multiplayer support for future versions.
- - Consider adding magic systems, factions, or alignment tracking as simple text-based attributes.
- - Plan for optimizations (incremental data loading, safeguards on event generation).
-
-
-
-
-
-
+- Explore multiplayer support for future versions.
+- Consider adding magic systems, factions, or alignment tracking as simple text-based attributes.
+- Plan for optimizations (incremental data loading, safeguards on event generation).
