@@ -5,26 +5,24 @@ from model import ProjectModel
 from view.view_model import ProjectViewModel
 from view.view import MainWindow
 import sys
+from game.world.world import World  
 
 
-def main():
-    app = QApplication(sys.argv)
+
+class Game:
+    def __init__(self):
+        self.app = QApplication(sys.argv)
+        self.world = World()
+        self.model = ProjectModel(self)
+        self.view_model = ProjectViewModel(self.model)
+        self.window = MainWindow(self.view_model)
     
-    with open("files/stylesheets/style.qss", "r") as file:
-        app.setStyleSheet(file.read())
+    def run(self):
+        with open("files/stylesheets/style.qss", "r") as file:
+            self.app.setStyleSheet(file.read())
 
-    # Initialize the model
-    model = ProjectModel()
-
-    # Initialize the View-Model and pass the model
-    view_model = ProjectViewModel(model)
-
-    # Initialize the MainWindow (View) and pass the View-Model
-    window = MainWindow(view_model)
-    window.show()
-
-    sys.exit(app.exec())
-
+        self.window.show()
+        sys.exit(self.app.exec())
 
 if __name__ == "__main__":
-    main()
+    Game().run()

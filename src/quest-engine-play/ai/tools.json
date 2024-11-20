@@ -1,0 +1,442 @@
+[
+    {
+        "type": "function",
+        "function": {
+            "name": "rng",
+            "description": "Generates a random number between min and max values.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "min": {
+                        "type": "number",
+                        "description": "Minimum value for the random number",
+                        "default": 0
+                    },
+                    "max": {
+                        "type": "number",
+                        "description": "Maximum value for the random number",
+                        "default": 1
+                    }
+                }
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "get_data",
+            "description": "Retrieves data for a specific entity reference.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "entity_reference": {
+                        "type": "string",
+                        "description": "The reference identifier for the entity. Must be a key in references or in the form [key].[attr].[...].[attr] or a valid location_path"
+                    }
+                },
+                "required": ["entity_reference"]
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "quit_program",
+            "description": "Terminates the program."
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "create_generic_item",
+            "description": "Creates a generic item with the specified name and properties.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "Name of the item"
+                    },
+                    "inventory_reference": {
+                        "type": "string",
+                        "description": "Reference name for the inventory the item will be created in. Must be a key in references or in the form [key].[attr].[...].[attr].inventory"
+                    },
+                    "set_reference": {
+                        "type": "string",
+                        "description": "Reference name for the item. Will become a key in references.",
+                        "default": null
+                    },
+                    "kwargs": {
+                        "type": "object",
+                        "description": "Additional properties for the item"
+                    }
+                },
+                "required": ["name"]
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "create_generic_npc",
+            "description": "Creates a generic NPC with the specified name and properties.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "Name of the NPC"
+                    },
+                    "set_reference": {
+                        "type": "string",
+                        "description": "Reference name for the NPC",
+                        "default": null
+                    },
+                    "kwargs": {
+                        "type": "object",
+                        "description": "Additional properties for the NPC"
+                    }
+                },
+                "required": ["name"]
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "move_item",
+            "description": "Moves an item from one inventory to another.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "item_reference": {
+                        "type": "string",
+                        "description": "Reference name of the item to move. Must be a key in references or in the form [key].[attr].[...].[attr]"
+                    },
+                    "from_inventory_reference": {
+                        "type": "string",
+                        "description": "Reference name of the source inventory. Must be a key in references or in the form [key].[attr].[...].[attr].inventory"
+                    },
+                    "to_inventory_reference": {
+                        "type": "string",
+                        "description": "Reference name of the destination inventory. Must be a key in references or in the form [key].[attr].[...].[attr].inventory"
+                    },
+                    "quantity": {
+                        "type": "integer",
+                        "description": "Quantity of the item to move",
+                        "default": 1
+                    }
+                },
+                "required": [
+                    "item_reference",
+                    "from_inventory_reference",
+                    "to_inventory_reference"
+                ]
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "add_event",
+            "description": "Adds a new event with specified properties.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "kwargs": {
+                        "type": "object",
+                        "description": "Properties for the event"
+                    }
+                }
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "remove_object",
+            "description": "Removes an object from a specified inventory.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "object_name": {
+                        "type": "string",
+                        "description": "Name of the object to remove"
+                    },
+                    "inventory_reference": {
+                        "type": "string",
+                        "description": "Reference name of the inventory. Must be a key in references or in the form [key].[attr].[...].[attr].inventory"
+                    },
+                    "set_reference": {
+                        "type": "string",
+                        "description": "Reference for the object to be set in references",
+                        "default": null
+                    }
+                },
+                "required": ["object_name", "inventory_reference"]
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "get_reference",
+            "description": "Retrieves an object by reference name.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "Reference name of the object. Must be a key in references or in the form [key].[attr].[...].[attr]"
+                    }
+                },
+                "required": ["name"]
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "create_reference",
+            "description": "Creates a reference for a specific object in an inventory.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "object_name": {
+                        "type": "string",
+                        "description": "Name if the object to reference"
+                    },
+                    "inventory_reference": {
+                        "type": "string",
+                        "description": "Reference name of the inventory object is in. Must be a key in references or in the form [key].[attr].[...].[attr].inventory"
+                    },
+                    "set_reference": {
+                        "type": "string",
+                        "description": "Reference name for the object"
+                    }
+                },
+                "required": ["object_name", "inventory_reference", "set_reference"]
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "create_location_reference",
+            "description": "Creates a reference for a location based on the specified path.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "location_path": {
+                        "type": "string",
+                        "description": "Path to the location in 'world_map/location1/.../locationN' format or '[reference].[attr].[...].location_path' format"
+                    },
+                    "set_reference": {
+                        "type": "string",
+                        "description": "Reference name for the location"
+                    }
+                },
+                "required": ["location_path", "set_reference"]
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "list_references",
+            "description": "Lists all current references."
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "remove_reference",
+            "description": "Removes a specific reference by name.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "Name of the reference to remove"
+                    }
+                },
+                "required": ["name"]
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "clear_references",
+            "description": "Clears all references."
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "action_time",
+            "description": "Logs the time taken for an entity to complete an action.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "entity_reference": {
+                        "type": "string",
+                        "description": "Entity performing the action. Must be a key in references or in the form [key].[attr].[...].[attr]"
+                    },
+                    "time": {
+                        "type": "number",
+                        "description": "Time taken for the action in seconds"
+                    }
+                },
+                "required": ["entity_reference", "time"]
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "add_status_effect",
+            "description": "Adds a status effect to an entity.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "entity_reference": {
+                        "type": "string",
+                        "description": "Entity to add the status effect to. Must be a key in references or in the form [key].[attr].[...].[attr]"
+                    },
+                    "effect": {
+                        "type": "string",
+                        "description": "Status effect to add"
+                    }
+                },
+                "required": ["entity_reference", "effect"]
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "remove_status_effect",
+            "description": "Removes a status effect from an entity.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "entity_reference": {
+                        "type": "string",
+                        "description": "Entity to remove the status effect from. Must be a key in references or in the form [key].[attr].[...].[attr]"
+                    },
+                    "effect": {
+                        "type": "string",
+                        "description": "Status effect to remove"
+                    }
+                },
+                "required": ["entity_reference", "effect"]
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "entity_action",
+            "description": "Logs an action performed by an entity.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "entity_reference": {
+                        "type": "string",
+                        "description": "Entity performing the action"
+                    },
+                    "action": {
+                        "type": "string",
+                        "description": "Action performed by the entity"
+                    }
+                },
+                "required": ["entity_reference", "action"]
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "move_entity",
+            "description": "Moves an entity to a specified location.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "entity_reference": {
+                        "type": "string",
+                        "description": "Entity to move. Must be a key in references or in the form [key].[attr].[...].[attr]"
+                    },
+                    "location_path": {
+                        "type": "string",
+                        "description": "Reference name of the location to move the entity to. a valid location_path"
+                    }
+                },
+                "required": ["entity_reference", "location_path"]
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "npc_memory_update",
+            "description": "Updates an NPC's memory with new information.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "npc_reference": {
+                        "type": "string",
+                        "description": "NPC to update memory. Must be a key in references or in the form [key].[attr].[...].[attr]"
+                    },
+                    "memory": {
+                        "type": "string",
+                        "description": "Memory to update for the NPC"
+                    }
+                },
+                "required": ["npc_reference", "memory"]
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "update_player_notes",
+            "description": "Updates the notes for a specific player.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "player_reference": {
+                        "type": "string",
+                        "description": "Reference to the player whose notes to update. Must be a key in references or in the form [key].[attr].[...].[attr]"
+                    },
+                    "notes": {
+                        "type": "string",
+                        "description": "Notes to update for the player"
+                    }
+                },
+                "required": ["player_reference", "notes"]
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "log_event",
+            "description": "Logs a specified event.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "event": {
+                        "type": "string",
+                        "description": "Event to log"
+                    },
+                    "kwargs": {
+                        "type": "object",
+                        "description": "Additional event properties"
+                    }
+                },
+                "required": ["event"]
+            }
+        }
+    }
+]

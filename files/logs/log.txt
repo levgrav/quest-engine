@@ -1,0 +1,1230 @@
+View Model Initialized...
+Showing main_menu...
+Showing game_select...
+Showing game...
+Function: list_references(), Result: ['player_harold', 'npc_npc1', 'npc_npc2']
+Function: get_data(entity_reference = player_harold), Result: {
+    "name": "harold",
+    "description": "A player character",
+    "location": "world_map/forest/forest_clearing",
+    "inventory": []
+}
+Function: get_data(entity_reference = npc_npc1), Result: {
+    "name": "npc1",
+    "location": "world_map/forest",
+    "description": "A character",
+    "inventory": []
+}
+Function: get_data(entity_reference = npc_npc2), Result: {
+    "name": "npc2",
+    "location": "world_map/mountain",
+    "description": "A character",
+    "inventory": []
+}
+Function: get_data(entity_reference = world_map/forest/forest_clearing), Result: {
+    "name": "Forest Clearing",
+    "description": "A clearing in the forest",
+    "features": [
+        "grass",
+        "flowers"
+    ],
+    "locations": [],
+    "routes": {},
+    "inventory": [
+        {
+            "item": {
+                "name": "Sword",
+                "description": "A sword",
+                "value": 10,
+                "weight": 5
+            },
+            "quantity": 1
+        },
+        {
+            "item": {
+                "name": "Shield",
+                "description": "A shield",
+                "value": 10,
+                "weight": 5
+            },
+            "quantity": 1
+        },
+        {
+            "item": {
+                "name": "Potion",
+                "description": "A potion",
+                "value": 10,
+                "weight": 5
+            },
+            "quantity": 1
+        }
+    ]
+}
+You are currently in a **Forest Clearing**. The area is filled with grass and flowers, providing a vibrant and serene atmosphere. 
+
+Here are the items available in the clearing:
+- **Sword**: A sword, valued at 10 and weighing 5.
+- **Shield**: A shield, valued at 10 and weighing 5.
+- **Potion**: A potion, valued at 10 and weighing 5.
+
+Nearby, you can feel the presence of two NPCs:
+1. **npc1**: Located in the forest, described simply as a character.
+2. **npc2**: Located in the mountains, also described as a character.
+
+What would you like to do next?
+Function: move_entity(entity_reference = player_harold, location_path = world_map/forest), Result: Moved harold to forest
+Function: get_data(entity_reference = world_map/forest), Result: {
+    "name": "forest",
+    "description": "A forest",
+    "features": [
+        "trees",
+        "animals"
+    ],
+    "locations": [
+        {
+            "name": "Forest Clearing",
+            "description": "A clearing in the forest",
+            "features": [
+                "grass",
+                "flowers"
+            ],
+            "locations": [],
+            "routes": {},
+            "inventory": [
+                {
+                    "item": {
+                        "name": "Sword",
+                        "description": "A sword",
+                        "value": 10,
+                        "weight": 5
+                    },
+                    "quantity": 1
+                },
+                {
+                    "item": {
+                        "name": "Shield",
+                        "description": "A shield",
+                        "value": 10,
+                        "weight": 5
+                    },
+                    "quantity": 1
+                },
+                {
+                    "item": {
+                        "name": "Potion",
+                        "description": "A potion",
+                        "value": 10,
+                        "weight": 5
+                    },
+                    "quantity": 1
+                }
+            ]
+        }
+    ],
+    "routes": {},
+    "inventory": [
+        {
+            "item": {
+                "name": "Apple",
+                "description": "An apple",
+                "value": 1,
+                "weight": 1
+            },
+            "quantity": 1
+        },
+        {
+            "item": {
+                "name": "Orange",
+                "description": "An orange",
+                "value": 1,
+                "weight": 1
+            },
+            "quantity": 1
+        },
+        {
+            "item": {
+                "name": "Banana",
+                "description": "A banana",
+                "value": 1,
+                "weight": 1
+            },
+            "quantity": 1
+        }
+    ]
+}
+You have moved into the **forest**. The area is lush with trees and populated by various animals.
+
+Here are the items currently available in the forest:
+- **Apple**: An apple, valued at 1 and weighing 1.
+- **Orange**: An orange, valued at 1 and weighing 1.
+- **Banana**: A banana, valued at 1 and weighing 1.
+
+You can also still access the **Forest Clearing**, which contains:
+- **Sword**
+- **Shield**
+- **Potion**
+
+What would you like to do next?
+Function: move_entity(entity_reference = player_harold, location_path = world_map/mountain), Result: Moved harold to Mountain
+Function: get_data(entity_reference = world_map/mountain), Result: {
+    "name": "Mountain",
+    "description": "A mountain",
+    "features": [
+        "rocks",
+        "snow"
+    ],
+    "locations": [
+        {
+            "name": "Mountain Cave",
+            "description": "A cave in the mountain",
+            "features": [
+                "darkness",
+                "bats"
+            ],
+            "locations": [],
+            "routes": {},
+            "inventory": [
+                {
+                    "item": {
+                        "name": "Torch",
+                        "description": "A torch",
+                        "value": 10,
+                        "weight": 5
+                    },
+                    "quantity": 1
+                },
+                {
+                    "item": {
+                        "name": "Rope",
+                        "description": "A rope",
+                        "value": 10,
+                        "weight": 5
+                    },
+                    "quantity": 1
+                },
+                {
+                    "item": {
+                        "name": "Pickaxe",
+                        "description": "A pickaxe",
+                        "value": 10,
+                        "weight": 5
+                    },
+                    "quantity": 1
+                }
+            ]
+        },
+        {
+            "name": "Mountain Peak",
+            "description": "The peak of the mountain",
+            "features": [
+                "wind",
+                "view"
+            ],
+            "locations": [],
+            "routes": {},
+            "inventory": [
+                {
+                    "item": {
+                        "name": "Climbing Gear",
+                        "description": "Climbing gear",
+                        "value": 10,
+                        "weight": 5
+                    },
+                    "quantity": 1
+                },
+                {
+                    "item": {
+                        "name": "Oxygen Tank",
+                        "description": "Oxygen tank",
+                        "value": 10,
+                        "weight": 5
+                    },
+                    "quantity": 1
+                },
+                {
+                    "item": {
+                        "name": "Map",
+                        "description": "A map",
+                        "value": 10,
+                        "weight": 5
+                    },
+                    "quantity": 1
+                }
+            ]
+        },
+        {
+            "name": "Monestary",
+            "description": "A monestary",
+            "features": [
+                "monks",
+                "prayer"
+            ],
+            "locations": [
+                {
+                    "name": "Monestary Garden",
+                    "description": "A garden in the monestary",
+                    "features": [
+                        "flowers",
+                        "statues"
+                    ],
+                    "locations": [],
+                    "routes": {},
+                    "inventory": [
+                        {
+                            "item": {
+                                "name": "Herbs",
+                                "description": "Herbs",
+                                "value": 10,
+                                "weight": 5
+                            },
+                            "quantity": 1
+                        },
+                        {
+                            "item": {
+                                "name": "Flowers",
+                                "description": "Flowers",
+                                "value": 10,
+                                "weight": 5
+                            },
+                            "quantity": 1
+                        },
+                        {
+                            "item": {
+                                "name": "Statue",
+                                "description": "A statue",
+                                "value": 10,
+                                "weight": 5
+                            },
+                            "quantity": 1
+                        }
+                    ]
+                },
+                {
+                    "name": "Monestary Library",
+                    "description": "A library in the monestary",
+                    "features": [
+                        "books",
+                        "scrolls"
+                    ],
+                    "locations": [],
+                    "routes": {},
+                    "inventory": [
+                        {
+                            "item": {
+                                "name": "Book",
+                                "description": "A book",
+                                "value": 10,
+                                "weight": 5
+                            },
+                            "quantity": 1
+                        },
+                        {
+                            "item": {
+                                "name": "Scroll",
+                                "description": "A scroll",
+                                "value": 10,
+                                "weight": 5
+                            },
+                            "quantity": 1
+                        },
+                        {
+                            "item": {
+                                "name": "Quill",
+                                "description": "A quill",
+                                "value": 10,
+                                "weight": 5
+                            },
+                            "quantity": 1
+                        }
+                    ]
+                },
+                {
+                    "name": "Monestary Dormitory",
+                    "description": "A dormitory in the monestary",
+                    "features": [
+                        "beds",
+                        "clothes"
+                    ],
+                    "locations": [],
+                    "routes": {},
+                    "inventory": [
+                        {
+                            "item": {
+                                "name": "Bed",
+                                "description": "A bed",
+                                "value": 10,
+                                "weight": 5
+                            },
+                            "quantity": 1
+                        },
+                        {
+                            "item": {
+                                "name": "Clothes",
+                                "description": "Clothes",
+                                "value": 10,
+                                "weight": 5
+                            },
+                            "quantity": 1
+                        },
+                        {
+                            "item": {
+                                "name": "Blanket",
+                                "description": "A blanket",
+                                "value": 10,
+                                "weight": 5
+                            },
+                            "quantity": 1
+                        }
+                    ]
+                }
+            ],
+            "routes": {},
+            "inventory": [
+                {
+                    "item": {
+                        "name": "Monk Robes",
+                        "description": "Monk robes",
+                        "value": 10,
+                        "weight": 5
+                    },
+                    "quantity": 1
+                },
+                {
+                    "item": {
+                        "name": "Prayer Beads",
+                        "description": "Prayer beads",
+                        "value": 10,
+                        "weight": 5
+                    },
+                    "quantity": 1
+                },
+                {
+                    "item": {
+                        "name": "Candle",
+                        "description": "A candle",
+                        "value": 10,
+                        "weight": 5
+                    },
+                    "quantity": 1
+                }
+            ]
+        }
+    ],
+    "routes": {},
+    "inventory": [
+        {
+            "item": {
+                "name": "Rock",
+                "description": "A rock",
+                "value": 1,
+                "weight": 1
+            },
+            "quantity": 1
+        },
+        {
+            "item": {
+                "name": "Snowball",
+                "description": "A snowball",
+                "value": 1,
+                "weight": 1
+            },
+            "quantity": 1
+        },
+        {
+            "item": {
+                "name": "Ice",
+                "description": "Ice",
+                "value": 1,
+                "weight": 1
+            },
+            "quantity": 1
+        }
+    ]
+}
+You have arrived at the **Mountain**. The area is characterized by rocky surfaces and patches of snow.
+
+Here are the items currently available in the mountain:
+- **Rock**: A rock, valued at 1 and weighing 1.
+- **Snowball**: A snowball, valued at 1 and weighing 1.
+- **Ice**: Ice, valued at 1 and weighing 1.
+
+In addition, you can explore several locations within the mountain:
+1. **Mountain Cave**: A cave that is dark and inhabited by bats.
+   - **Items**: Torch, Rope, Pickaxe.
+   
+2. **Mountain Peak**: The top of the mountain with strong winds and a breathtaking view.
+   - **Items**: Climbing Gear, Oxygen Tank, Map.
+
+3. **Monastery**: A peaceful place with monks engaged in prayer.
+   - **Items**: Monk Robes, Prayer Beads, Candle.
+   - Locations within the monastery:
+     - **Monastery Garden**: Features flowers and statues (Items: Herbs, Flowers, Statue).
+     - **Monastery Library**: Filled with books and scrolls (Items: Book, Scroll, Quill).
+     - **Monastery Dormitory**: Provides beds and clothes (Items: Bed, Clothes, Blanket).
+
+What would you like to do next?
+Function: move_entity(entity_reference = player_harold, location_path = world_map/mountain/Mountain Peak), Result: Moved harold to Mountain Peak
+Function: get_data(entity_reference = world_map/mountain/Mountain Peak), Result: {
+    "name": "Mountain Peak",
+    "description": "The peak of the mountain",
+    "features": [
+        "wind",
+        "view"
+    ],
+    "locations": [],
+    "routes": {},
+    "inventory": [
+        {
+            "item": {
+                "name": "Climbing Gear",
+                "description": "Climbing gear",
+                "value": 10,
+                "weight": 5
+            },
+            "quantity": 1
+        },
+        {
+            "item": {
+                "name": "Oxygen Tank",
+                "description": "Oxygen tank",
+                "value": 10,
+                "weight": 5
+            },
+            "quantity": 1
+        },
+        {
+            "item": {
+                "name": "Map",
+                "description": "A map",
+                "value": 10,
+                "weight": 5
+            },
+            "quantity": 1
+        }
+    ]
+}
+Function: entity_action(entity_reference = player_harold, action = look around at the world), Result: entity harold performed action: look around at the world
+You have reached the **Mountain Peak**. Standing here, you are greeted by a strong wind and a breathtaking view of the surrounding landscape. From this vantage point, you can see:
+
+- The vast forest stretching out, dotted with patches of light and shadow.
+- The winding paths leading back to the Forest Clearing below.
+- The distant mountains that form the horizon, their peaks capped with snow.
+- The valley below where small villages lie nestled between the trees.
+
+In your new location, you can spot the following items available at the peak:
+- **Climbing Gear**: Useful for navigating steep and challenging terrains.
+- **Oxygen Tank**: Essential for high-altitude exploration.
+- **Map**: A detailed map of the surrounding areas, helpful for navigation.
+
+What would you like to do next?
+Function: get_data(entity_reference = world_map), Result: {
+    "name": "World Map",
+    "description": "The world map",
+    "features": [
+        "forest",
+        "mountain",
+        "river"
+    ],
+    "locations": [
+        {
+            "name": "forest",
+            "description": "A forest",
+            "features": [
+                "trees",
+                "animals"
+            ],
+            "locations": [
+                {
+                    "name": "Forest Clearing",
+                    "description": "A clearing in the forest",
+                    "features": [
+                        "grass",
+                        "flowers"
+                    ],
+                    "locations": [],
+                    "routes": {},
+                    "inventory": [
+                        {
+                            "item": {
+                                "name": "Sword",
+                                "description": "A sword",
+                                "value": 10,
+                                "weight": 5
+                            },
+                            "quantity": 1
+                        },
+                        {
+                            "item": {
+                                "name": "Shield",
+                                "description": "A shield",
+                                "value": 10,
+                                "weight": 5
+                            },
+                            "quantity": 1
+                        },
+                        {
+                            "item": {
+                                "name": "Potion",
+                                "description": "A potion",
+                                "value": 10,
+                                "weight": 5
+                            },
+                            "quantity": 1
+                        }
+                    ]
+                }
+            ],
+            "routes": {},
+            "inventory": [
+                {
+                    "item": {
+                        "name": "Apple",
+                        "description": "An apple",
+                        "value": 1,
+                        "weight": 1
+                    },
+                    "quantity": 1
+                },
+                {
+                    "item": {
+                        "name": "Orange",
+                        "description": "An orange",
+                        "value": 1,
+                        "weight": 1
+                    },
+                    "quantity": 1
+                },
+                {
+                    "item": {
+                        "name": "Banana",
+                        "description": "A banana",
+                        "value": 1,
+                        "weight": 1
+                    },
+                    "quantity": 1
+                }
+            ]
+        },
+        {
+            "name": "Mountain",
+            "description": "A mountain",
+            "features": [
+                "rocks",
+                "snow"
+            ],
+            "locations": [
+                {
+                    "name": "Mountain Cave",
+                    "description": "A cave in the mountain",
+                    "features": [
+                        "darkness",
+                        "bats"
+                    ],
+                    "locations": [],
+                    "routes": {},
+                    "inventory": [
+                        {
+                            "item": {
+                                "name": "Torch",
+                                "description": "A torch",
+                                "value": 10,
+                                "weight": 5
+                            },
+                            "quantity": 1
+                        },
+                        {
+                            "item": {
+                                "name": "Rope",
+                                "description": "A rope",
+                                "value": 10,
+                                "weight": 5
+                            },
+                            "quantity": 1
+                        },
+                        {
+                            "item": {
+                                "name": "Pickaxe",
+                                "description": "A pickaxe",
+                                "value": 10,
+                                "weight": 5
+                            },
+                            "quantity": 1
+                        }
+                    ]
+                },
+                {
+                    "name": "Mountain Peak",
+                    "description": "The peak of the mountain",
+                    "features": [
+                        "wind",
+                        "view"
+                    ],
+                    "locations": [],
+                    "routes": {},
+                    "inventory": [
+                        {
+                            "item": {
+                                "name": "Climbing Gear",
+                                "description": "Climbing gear",
+                                "value": 10,
+                                "weight": 5
+                            },
+                            "quantity": 1
+                        },
+                        {
+                            "item": {
+                                "name": "Oxygen Tank",
+                                "description": "Oxygen tank",
+                                "value": 10,
+                                "weight": 5
+                            },
+                            "quantity": 1
+                        },
+                        {
+                            "item": {
+                                "name": "Map",
+                                "description": "A map",
+                                "value": 10,
+                                "weight": 5
+                            },
+                            "quantity": 1
+                        }
+                    ]
+                },
+                {
+                    "name": "Monestary",
+                    "description": "A monestary",
+                    "features": [
+                        "monks",
+                        "prayer"
+                    ],
+                    "locations": [
+                        {
+                            "name": "Monestary Garden",
+                            "description": "A garden in the monestary",
+                            "features": [
+                                "flowers",
+                                "statues"
+                            ],
+                            "locations": [],
+                            "routes": {},
+                            "inventory": [
+                                {
+                                    "item": {
+                                        "name": "Herbs",
+                                        "description": "Herbs",
+                                        "value": 10,
+                                        "weight": 5
+                                    },
+                                    "quantity": 1
+                                },
+                                {
+                                    "item": {
+                                        "name": "Flowers",
+                                        "description": "Flowers",
+                                        "value": 10,
+                                        "weight": 5
+                                    },
+                                    "quantity": 1
+                                },
+                                {
+                                    "item": {
+                                        "name": "Statue",
+                                        "description": "A statue",
+                                        "value": 10,
+                                        "weight": 5
+                                    },
+                                    "quantity": 1
+                                }
+                            ]
+                        },
+                        {
+                            "name": "Monestary Library",
+                            "description": "A library in the monestary",
+                            "features": [
+                                "books",
+                                "scrolls"
+                            ],
+                            "locations": [],
+                            "routes": {},
+                            "inventory": [
+                                {
+                                    "item": {
+                                        "name": "Book",
+                                        "description": "A book",
+                                        "value": 10,
+                                        "weight": 5
+                                    },
+                                    "quantity": 1
+                                },
+                                {
+                                    "item": {
+                                        "name": "Scroll",
+                                        "description": "A scroll",
+                                        "value": 10,
+                                        "weight": 5
+                                    },
+                                    "quantity": 1
+                                },
+                                {
+                                    "item": {
+                                        "name": "Quill",
+                                        "description": "A quill",
+                                        "value": 10,
+                                        "weight": 5
+                                    },
+                                    "quantity": 1
+                                }
+                            ]
+                        },
+                        {
+                            "name": "Monestary Dormitory",
+                            "description": "A dormitory in the monestary",
+                            "features": [
+                                "beds",
+                                "clothes"
+                            ],
+                            "locations": [],
+                            "routes": {},
+                            "inventory": [
+                                {
+                                    "item": {
+                                        "name": "Bed",
+                                        "description": "A bed",
+                                        "value": 10,
+                                        "weight": 5
+                                    },
+                                    "quantity": 1
+                                },
+                                {
+                                    "item": {
+                                        "name": "Clothes",
+                                        "description": "Clothes",
+                                        "value": 10,
+                                        "weight": 5
+                                    },
+                                    "quantity": 1
+                                },
+                                {
+                                    "item": {
+                                        "name": "Blanket",
+                                        "description": "A blanket",
+                                        "value": 10,
+                                        "weight": 5
+                                    },
+                                    "quantity": 1
+                                }
+                            ]
+                        }
+                    ],
+                    "routes": {},
+                    "inventory": [
+                        {
+                            "item": {
+                                "name": "Monk Robes",
+                                "description": "Monk robes",
+                                "value": 10,
+                                "weight": 5
+                            },
+                            "quantity": 1
+                        },
+                        {
+                            "item": {
+                                "name": "Prayer Beads",
+                                "description": "Prayer beads",
+                                "value": 10,
+                                "weight": 5
+                            },
+                            "quantity": 1
+                        },
+                        {
+                            "item": {
+                                "name": "Candle",
+                                "description": "A candle",
+                                "value": 10,
+                                "weight": 5
+                            },
+                            "quantity": 1
+                        }
+                    ]
+                }
+            ],
+            "routes": {},
+            "inventory": [
+                {
+                    "item": {
+                        "name": "Rock",
+                        "description": "A rock",
+                        "value": 1,
+                        "weight": 1
+                    },
+                    "quantity": 1
+                },
+                {
+                    "item": {
+                        "name": "Snowball",
+                        "description": "A snowball",
+                        "value": 1,
+                        "weight": 1
+                    },
+                    "quantity": 1
+                },
+                {
+                    "item": {
+                        "name": "Ice",
+                        "description": "Ice",
+                        "value": 1,
+                        "weight": 1
+                    },
+                    "quantity": 1
+                }
+            ]
+        },
+        {
+            "name": "River",
+            "description": "A river",
+            "features": [
+                "water",
+                "fish"
+            ],
+            "locations": [
+                {
+                    "name": "River Bank",
+                    "description": "The bank of the river",
+                    "features": [
+                        "mud",
+                        "reeds"
+                    ],
+                    "locations": [],
+                    "routes": {},
+                    "inventory": [
+                        {
+                            "item": {
+                                "name": "Fishing Rod",
+                                "description": "A fishing rod",
+                                "value": 10,
+                                "weight": 5
+                            },
+                            "quantity": 1
+                        },
+                        {
+                            "item": {
+                                "name": "Bait",
+                                "description": "Bait",
+                                "value": 10,
+                                "weight": 5
+                            },
+                            "quantity": 1
+                        },
+                        {
+                            "item": {
+                                "name": "Net",
+                                "description": "A net",
+                                "value": 10,
+                                "weight": 5
+                            },
+                            "quantity": 1
+                        }
+                    ]
+                },
+                {
+                    "name": "River Crossing",
+                    "description": "A crossing on the river",
+                    "features": [
+                        "bridge",
+                        "rocks"
+                    ],
+                    "locations": [],
+                    "routes": {},
+                    "inventory": [
+                        {
+                            "item": {
+                                "name": "Boat",
+                                "description": "A boat",
+                                "value": 10,
+                                "weight": 5
+                            },
+                            "quantity": 1
+                        },
+                        {
+                            "item": {
+                                "name": "Paddle",
+                                "description": "A paddle",
+                                "value": 10,
+                                "weight": 5
+                            },
+                            "quantity": 1
+                        },
+                        {
+                            "item": {
+                                "name": "Life Jacket",
+                                "description": "A life jacket",
+                                "value": 10,
+                                "weight": 5
+                            },
+                            "quantity": 1
+                        }
+                    ]
+                }
+            ],
+            "routes": {},
+            "inventory": [
+                {
+                    "item": {
+                        "name": "Fish",
+                        "description": "A fish",
+                        "value": 1,
+                        "weight": 1
+                    },
+                    "quantity": 1
+                },
+                {
+                    "item": {
+                        "name": "Water",
+                        "description": "Water",
+                        "value": 1,
+                        "weight": 1
+                    },
+                    "quantity": 1
+                },
+                {
+                    "item": {
+                        "name": "Reed",
+                        "description": "Reed",
+                        "value": 1,
+                        "weight": 1
+                    },
+                    "quantity": 1
+                }
+            ]
+        }
+    ],
+    "routes": {},
+    "inventory": []
+}
+Here's the data for the **World Map**:
+
+### Features:
+- **Forest**
+- **Mountain**
+- **River**
+
+### Locations:
+
+1. **Forest**
+   - **Description**: A forest with trees and animals.
+   - **Locations**:
+     - **Forest Clearing**: A clearing in the forest with grass and flowers.
+       - **Items**: Sword, Shield, Potion.
+   - **Inventory**: Apple, Orange, Banana.
+
+2. **Mountain**
+   - **Description**: A mountain with rocks and snow.
+   - **Locations**:
+     - **Mountain Cave**: A cave in the mountain with darkness and bats.
+       - **Items**: Torch, Rope, Pickaxe.
+     - **Mountain Peak**: The peak of the mountain with wind and great views.
+       - **Items**: Climbing Gear, Oxygen Tank, Map.
+     - **Monastery**: A monastic area with monks and prayer.
+       - **Items**: Monk Robes, Prayer Beads, Candle.
+       - **Sub-Locations**:
+         - **Monastery Garden**: Features flowers and statues (Items: Herbs, Flowers, Statue).
+         - **Monastery Library**: Contains books and scrolls (Items: Book, Scroll, Quill).
+         - **Monastery Dormitory**: Has beds and clothes (Items: Bed, Clothes, Blanket).
+   - **Inventory**: Rock, Snowball, Ice.
+
+3. **River**
+   - **Description**: A river with water and fish.
+   - **Locations**:
+     - **River Bank**: The bank of the river with mud and reeds.
+       - **Items**: Fishing Rod, Bait, Net.
+     - **River Crossing**: A crossing on the river with a bridge and rocks.
+       - **Items**: Boat, Paddle, Life Jacket.
+   - **Inventory**: Fish, Water, Reed.
+
+The world is rich with locations and items to explore! What would you like to do next?
+Function: move_entity(entity_reference = player_harold, location_path = world_map/rivers), Result: location world_map/rivers not found
+Function: move_entity(entity_reference = player_harold, location_path = world_map/river), Result: Moved harold to River
+Function: get_data(entity_reference = world_map/river), Result: {
+    "name": "River",
+    "description": "A river",
+    "features": [
+        "water",
+        "fish"
+    ],
+    "locations": [
+        {
+            "name": "River Bank",
+            "description": "The bank of the river",
+            "features": [
+                "mud",
+                "reeds"
+            ],
+            "locations": [],
+            "routes": {},
+            "inventory": [
+                {
+                    "item": {
+                        "name": "Fishing Rod",
+                        "description": "A fishing rod",
+                        "value": 10,
+                        "weight": 5
+                    },
+                    "quantity": 1
+                },
+                {
+                    "item": {
+                        "name": "Bait",
+                        "description": "Bait",
+                        "value": 10,
+                        "weight": 5
+                    },
+                    "quantity": 1
+                },
+                {
+                    "item": {
+                        "name": "Net",
+                        "description": "A net",
+                        "value": 10,
+                        "weight": 5
+                    },
+                    "quantity": 1
+                }
+            ]
+        },
+        {
+            "name": "River Crossing",
+            "description": "A crossing on the river",
+            "features": [
+                "bridge",
+                "rocks"
+            ],
+            "locations": [],
+            "routes": {},
+            "inventory": [
+                {
+                    "item": {
+                        "name": "Boat",
+                        "description": "A boat",
+                        "value": 10,
+                        "weight": 5
+                    },
+                    "quantity": 1
+                },
+                {
+                    "item": {
+                        "name": "Paddle",
+                        "description": "A paddle",
+                        "value": 10,
+                        "weight": 5
+                    },
+                    "quantity": 1
+                },
+                {
+                    "item": {
+                        "name": "Life Jacket",
+                        "description": "A life jacket",
+                        "value": 10,
+                        "weight": 5
+                    },
+                    "quantity": 1
+                }
+            ]
+        }
+    ],
+    "routes": {},
+    "inventory": [
+        {
+            "item": {
+                "name": "Fish",
+                "description": "A fish",
+                "value": 1,
+                "weight": 1
+            },
+            "quantity": 1
+        },
+        {
+            "item": {
+                "name": "Water",
+                "description": "Water",
+                "value": 1,
+                "weight": 1
+            },
+            "quantity": 1
+        },
+        {
+            "item": {
+                "name": "Reed",
+                "description": "Reed",
+                "value": 1,
+                "weight": 1
+            },
+            "quantity": 1
+        }
+    ]
+}
+You have arrived at the **River**. The area features flowing water and is teeming with fish.
+
+### Here are the details:
+
+**Inventory at the River:**
+- **Fish**: A fish, valued at 1 and weighing 1.
+- **Water**: Water, valued at 1 and weighing 1.
+- **Reed**: Reed, valued at 1 and weighing 1.
+
+### Locations near the River:
+1. **River Bank**: The bank of the river, characterized by mud and reeds.
+   - **Items**: Fishing Rod, Bait, Net.
+
+2. **River Crossing**: A crossing on the river, featuring a bridge and rocks.
+   - **Items**: Boat, Paddle, Life Jacket.
+
+What would you like to do next?
+Function: move_entity(entity_reference = player_harold, location_path = world_map/river/River Crossing), Result: Moved harold to River Crossing
+Function: get_data(entity_reference = world_map/river/River Crossing), Result: {
+    "name": "River Crossing",
+    "description": "A crossing on the river",
+    "features": [
+        "bridge",
+        "rocks"
+    ],
+    "locations": [],
+    "routes": {},
+    "inventory": [
+        {
+            "item": {
+                "name": "Boat",
+                "description": "A boat",
+                "value": 10,
+                "weight": 5
+            },
+            "quantity": 1
+        },
+        {
+            "item": {
+                "name": "Paddle",
+                "description": "A paddle",
+                "value": 10,
+                "weight": 5
+            },
+            "quantity": 1
+        },
+        {
+            "item": {
+                "name": "Life Jacket",
+                "description": "A life jacket",
+                "value": 10,
+                "weight": 5
+            },
+            "quantity": 1
+        }
+    ]
+}
+You have crossed the bridge and arrived at the **River Crossing**. This spot features rocks and offers a view of the flowing river.
+
+### Inventory at the River Crossing:
+- **Boat**: A boat, valued at 10 and weighing 5.
+- **Paddle**: A paddle, valued at 10 and weighing 5.
+- **Life Jacket**: A life jacket, valued at 10 and weighing 5.
+
+What would you like to do next?
