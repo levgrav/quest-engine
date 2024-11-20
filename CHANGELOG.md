@@ -16,7 +16,7 @@ First sort-of working version!
 - System Prompt for LM
 
 ### Fixed
-- The fact that it wasn;t a working game
+- The fact that it wasn't a working game
 
 ## [0.1.4] - 2024-10-21
 
