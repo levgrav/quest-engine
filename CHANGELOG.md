@@ -4,6 +4,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.2.1] - 2024-11-21
+API Key Checker
+
+### Added
+- Checking to make sure the user has a valid API Key
+- Prompting if the user does not
+- Saving entered API Key
+
+## Changed
+- How the user interacts with the API Key, More automation
+
+## Fixed 
+- Difficulties with user interface for API Key
+
 ## [0.2.0] - 2024-11-20
 First sort-of working version!
 

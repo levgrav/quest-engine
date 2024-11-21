@@ -2,6 +2,7 @@ import openai
 import json
 import os
 from ai.gpt_functions import Gpt_Functions
+from openai import APIConnectionError
 
 
 class Gpt:
@@ -10,12 +11,18 @@ class Gpt:
         self.project_model = project_model
         self.functions = Gpt_Functions(project_model)
 
-        with open("openai_api_key.txt") as f:
-            self.key = f.readline().strip()
+        if os.path.exists("openai_api_key.txt"):
+            with open("openai_api_key.txt") as f:
+                self.key = f.readline().strip()
+        else:
+            with open("openai_api_key.txt", "w") as f:
+                f.write("[Please enter your OpenAI API key here]")
+                self.key = "[Please enter your OpenAI API key here]"
+
+
         with open(r"src\quest-engine-play\ai\system_message.txt") as f:
             self.system_message = f.read()
 
-        self.client = openai.OpenAI(api_key=self.key)
 
         self.messages = [
             {"role": "system", "content": self.system_message}
@@ -25,6 +32,27 @@ class Gpt:
         # Define the function in the format expected by the OpenAI API
         with open(r"src\quest-engine-play\ai\tools.json") as f:
             self.tools = json.load(f)
+
+        # Connection Test:
+        while self.key != "x":
+            try:
+                self.client = openai.OpenAI(api_key=self.key)
+                self.get_response()
+                break
+            except APIConnectionError as e:
+                self.project_model.log.log(str(e))
+                self.project_model.log.log("Failed to connect to OpenAI API. Please check your API key in 'openai_api_key.txt'.")
+                print(str(e))
+                self.key = input("Failed to connect to OpenAI API. Please check your API key in 'openai_api_key.txt' or enter a valid key here. To find or make and API key got to https://platform.openai.com/api-keys. ('x' to skip)\n")
+
+        if self.key == "":
+            self.project_model.log.log("OpenAI API key not found. Please create a file called 'openai_api_key.txt' in the root directory of the project and add your OpenAI API key to it.")
+            self.project_model.parent_game.quit()
+            return  
+        else:
+            self.project_model.log.log("Connected to OpenAI API.")
+            with open("openai_api_key.txt", "w") as f:
+                f.write(self.key)
 
     # --- Functions --- #
     def get_response(self):
@@ -48,7 +76,7 @@ class Gpt:
                 break
             except Exception as e:
                 tries += 1
-                self.project_model.log.log(e)
+                self.project_model.log.log(str(e))
 
         if not response:
             self.project_model.log.log("Failed to get response")

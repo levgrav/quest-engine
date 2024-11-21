@@ -10,9 +10,9 @@ class ProjectModel:
         self.world = parent_game.world
         self.parent_dir = r"files\game_data\game_templates"
         self._project_name = project_name
-        self.gpt = gpt.Gpt(self)
         self.log = Log("files/logs/log.txt")
         self.log.clear_log()
+        self.gpt = gpt.Gpt(self)
 
     @property
     def project_name(self):

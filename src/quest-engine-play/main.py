@@ -24,5 +24,8 @@ class Game:
         self.window.show()
         sys.exit(self.app.exec())
 
+    def quit(self):
+        sys.exit()
+
 if __name__ == "__main__":
     Game().run()
