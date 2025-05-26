@@ -1,0 +1,12 @@
+{
+    "name": "locaion",
+    "id": "locaion",
+    "tags": ["place"],
+    "relations": [
+        ["item", "found in"],
+        ["player", "found in"]
+    ],
+    "properties": [
+        "description"
+    ]
+}

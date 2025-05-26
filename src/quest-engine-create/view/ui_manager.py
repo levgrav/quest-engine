@@ -313,7 +313,7 @@ class UIManager:
     def populate_project_tree_closed(self):  # only displays project folders
         self.project_tree_view.clear()
         for entry in os.scandir(self.window.view_model._model.parent_dir):
-            QTreeWidgetItem(self.project_tree_view, [entry.name])
+            item = QTreeWidgetItem(self.project_tree_view, [entry.name])
 
     def add_directory_contents(self, parent_item, directory):
         try:

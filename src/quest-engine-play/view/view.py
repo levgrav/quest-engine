@@ -45,8 +45,8 @@ class MainWindow(QMainWindow):
             ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID("myappid")
 
         # Fullscreen and window geometry
-        self.setGeometry(100, 100, 1200, 800)
-        self.showFullScreen()
+        self.setGeometry(0, 0, 1920//2, 1080//2)
+        # self.showFullScreen()
 
         # Load the background image once
         self.background_image = QPixmap()

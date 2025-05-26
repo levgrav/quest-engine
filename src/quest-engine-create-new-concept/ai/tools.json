@@ -1,0 +1,132 @@
+[
+    {
+        "type": "function",
+        "function": {
+            "name": "create_project",
+            "description": "Create a new project with a given name and author, and populate it with template files.",
+            "strict": true,
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "The name of the project to create"
+                    },
+                    "author": {
+                        "type": "string",
+                        "description": "The author of the project"
+                    }
+                },
+                "required": ["name", "author"],
+                "additionalProperties": false
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "delete_project",
+            "description": "Delete a project and all its files and directories",
+            "strict": true,
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "The name of the project to delete"
+                    }
+                },
+                "required": ["name"],
+                "additionalProperties": false
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "list_projects",
+            "description": "List all available projects",
+            "strict": true,
+            "parameters": {
+                "type": "object",
+                "properties": {},
+                "required": [],
+                "additionalProperties": false
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "list_files",
+            "description": "List all files in a specific directory within a project",
+            "strict": true,
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "project_name": {
+                        "type": "string",
+                        "description": "The name of the project"
+                    },
+                    "path": {
+                        "type": "string",
+                        "description": "The path inside the project to list files from"
+                    }
+                },
+                "required": ["project_name", "path"],
+                "additionalProperties": false
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "get_file_content",
+            "description": "Get the contents of a file within a project",
+            "strict": true,
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "project_name": {
+                        "type": "string",
+                        "description": "The name of the project"
+                    },
+                    "file_path": {
+                        "type": "string",
+                        "description": "The relative path of the file within the project"
+                    }
+                },
+                "required": ["project_name", "file_path"],
+                "additionalProperties": false
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "set_file_content",
+            "description": "Set or replace the contents of a file within a project",
+            "strict": true,
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "project_name": {
+                        "type": "string",
+                        "description": "The name of the project"
+                    },
+                    "file_path": {
+                        "type": "string",
+                        "description": "The relative path of the file within the project"
+                    },
+                    "content": {
+                        "type": "string",
+                        "description": "The content to write into the file"
+                    }
+                },
+                "required": ["project_name", "file_path", "content"],
+                "additionalProperties": false
+            }
+        }
+    }
+]
+

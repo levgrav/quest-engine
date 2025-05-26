@@ -2,6 +2,8 @@
 
 from PyQt6.QtCore import QObject, pyqtSignal
 from model import ProjectModel
+import os
+from view.user_functions import User_Functions
 
 
 class ProjectViewModel(QObject):
@@ -12,9 +14,12 @@ class ProjectViewModel(QObject):
     def __init__(self, model: ProjectModel):
         super().__init__()
         self._model = model
+        self.functions = User_Functions(model)
 
     def open_project(self, project_name: str):
         # Logic to open a project
+        if project_name not in os.listdir(self._model.parent_dir):
+            return "Project does not exist"
         self._model.project_name = project_name
         self.project_opened.emit()  # Emit signal that a project was opened
 
@@ -25,6 +30,8 @@ class ProjectViewModel(QObject):
 
     def create_project(self, project_name: str):
         # Logic to create a new project
+        if not project_name:
+            return "Please enter a project name"
         self._model.gpt.functions.create_project(project_name)
         self._model.project_name = project_name
         self.project_opened.emit()

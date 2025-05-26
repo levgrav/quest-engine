@@ -34,20 +34,22 @@ class Gpt:
             self.tools = json.load(f)
 
         # Connection Test:
-        while self.key != "x":
+        done = False
+        while not done:
             try:
                 self.client = openai.OpenAI(api_key=self.key)
                 self.get_response()
-                break
+                done = True
             except APIConnectionError as e:
                 self.project_model.log.log(str(e))
                 self.project_model.log.log("Failed to connect to OpenAI API. Please check your API key in 'openai_api_key.txt'.")
                 print(str(e))
-                self.key = input("Failed to connect to OpenAI API. Please check your API key in 'openai_api_key.txt' or enter a valid key here. To find or make and API key got to https://platform.openai.com/api-keys. ('x' to skip)\n")
+                self.key = input("Failed to connect to OpenAI API. Please check your API key in 'openai_api_key.txt' or enter a valid key here. To find or make and API key got to https://platform.openai.com/api-keys. ('x' to quit)\n")
+                if self.key == "x":
+                    done = True
 
-        if self.key == "":
+        if self.key == "x":
             self.project_model.log.log("OpenAI API key not found. Please create a file called 'openai_api_key.txt' in the root directory of the project and add your OpenAI API key to it.")
-            self.project_model.parent_game.quit()
             return  
         else:
             self.project_model.log.log("Connected to OpenAI API.")

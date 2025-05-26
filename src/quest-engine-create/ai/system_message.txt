@@ -3,46 +3,122 @@ The entire game is stored in json files which will be later used by a game engin
 You can create, read, update, and delete files and folders within a project. 
 You can create and delete projects, change the project you are accessing, as well as get a list of all active projects.
 The game data is stored in a project as follows, so when creating files and folders, please follow this structure (note that [brackets] indicate placeholders). The project will be created in this structure, so don't worry about the initial setup:
-[project_name]/
-    - character_types/ # sort of like classes in dnd
-        - [placeholder].json
-        ...
-    - items/
-        - template/ # template means that they will show up many times in a world as a common item
-            - [placeholder].json
-            ...
-        - custom/ # these are specific, one time items that have special attributes changed from a template item, or are completely new
-            - [placeholder].json
-            ...
-    - npcs/
-        - template/ # a basic, recurring npc 
-            - [placeholder].json
-            ...
-        - custom/ # one-time, specific npcs
-            - [placeholder].json
-            ...
-    - quests/
-        - [placeholder].json
-        ...
-    - world/ # each location directory contains 3 directories: features (describe the world/area/room on a large scale), locations (contains location directories), and routes (describe connection points between sub-locations). It also contains a json file with all relevant information about it specifically
-        - features/
-            - [placeholder].json
-            ...
-        - locations/
-            - [placeholder]/
-                - features/
+- Structure:
+    - games/:
+        - [game_name]: (multiple)
+            - [game_name].json
+                {
+                    "name": "[name]",
+                    "author": "[author]",
+                    ... 
+                    "settings" {
+                        ... 
+                    }
+                }
+            - world/ (location/)
+            - npcs/
+                - template/ 
+                    - [npc_name].json (multiple)
+                        {
+                            "name": "[name]",
+                            "description": "[description]"
+                            "attributes": ["[attribute]", "[attribute]", ...],
+                            "skills": ["[skill]", "[skill]", ...],
+                            "status_effects": ["effect", "effect", ...],
+                            "inventory": [
+                                
+                                {...},
+                                ...
+                            ]
+                            "current_location": "[location]/[sublocation]/..."
+                            notes: "[notes]"
+                        }
+                - custom/
+                    - [npc_name].json (multiple)
+                        {
+                            "name": "[name]",
+                            "description": "[description]"
+                            "attributes": ["[attribute]", "[attribute]", ...],
+                            "skills": ["[skill]", "[skill]", ...],
+                            "status_effects": ["effect", "effect", ...],
+                            "inventory": [
+                                
+                                {...},
+                                ...
+                            ]
+                            "current_location": "[location]/[sublocation]/..."
+                            notes: "[notes]"
+                        }
+            - items/ 
+                - template/
+                    - [item_name].json
+                        {
+                            "name": "[name]",
+                            ... (other properties)
+                        }
+                - custom/
+                - [item_name].json
+                    {
+                        "name": "[name]",
+                        ... (other properties)
+                    } 
+
+    - players/:
+        - [player_name].json (multiple)
+        {
+            "name": "[name]",
+            "descrition": "[description]"
+            "attributes": ["[attribute]", "[attribute]", ...],
+            "skills": ["[skill]", "[skill]", ...],
+            "status_effects": ["effect", "effect", ...],
+            "inventory": [
+                
+                {...},
+                ...
+            ]
+            "current_location": "[location]/[sublocation]/..."
+            notes: "[notes]"
+        }
+- Sub Structures:
+    - item_reference
+        {
+            "type": ["template" | "custom"],
+            "name": "[name]",
+            "qty": [#qty]
+            "place": "place"
+        }
+    - npc_reference:
+        {
+            "type": ["template" | "custom"],
+            "name": "[name]",
+            "place": "place"
+        }
+    - [location]/:
+        - [location_name].json
+            {
+                "name": "[name]",
+                "description": "[]",
+                "other_properties": {
+                    "[property]": [value],
                     ...
-                - locations/
-                    - [placeholder]/
-                    ...
-                - routes/
-                    ...
-                [placeholder].json
+                }
+            }
+        - [locations]/
+            - [location]/
                 ...
             ...
         - routes/
-            - [placeholder].json
-            ... 
-        - world.json
-    [project_name].json
-    notes.txt
+            - [route_name].json
+                {
+                    "name": "[name]",
+                    "endpoints": [
+                        "[location_path]",
+                        "[location_path]"
+                    ],
+                    "distance": "[distance]",
+                    "descriptio": "[description]",
+                    "other_properties": {
+                        "[property]": [value],
+                        ...
+                    }
+                }

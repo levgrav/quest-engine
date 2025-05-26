@@ -1,0 +1,9 @@
+{
+    "name": "object",
+    "id": "object",
+    "tags": [],
+    "relations": [
+        ["character", "holding"]
+    ],
+    "properties": []
+}

@@ -33,12 +33,16 @@ class ProjectManager:
         self.main_window = main_window
         self.ui_manager = ui_manager
 
-    def open_project(self):
+    def open_project(self, tree_item = None):
         # Prompt the user to select a project
 
-        project_name = self.ui_manager.text_prompt(
-            "Open Project", "Enter project name:"
-        )
+        if not isinstance(tree_item, QTreeWidgetItem):
+            project_name = self.ui_manager.text_prompt(
+                "Open Project", "Enter project name:"
+            )
+        else:
+            project_name = tree_item.text(0)
+            
         self.main_window.view_model.open_project(project_name)
 
     def close_project(self):

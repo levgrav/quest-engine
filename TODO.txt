@@ -63,9 +63,9 @@ Data Structures and File Management
                 {
                     "name": "[name]",
                     "author": "[author]",
-                    ... #TODO
+                    ... 
                     "settings" {
-                        ... #TODO
+                        ... 
                     }
                 }
             - world/ (location/)
@@ -106,14 +106,15 @@ Data Structures and File Management
                 - template/
                     - [item_name].json
                         {
-                            ... #TODO
+                            "name": "[name]",
+                            ... (other properties)
                         }
                 - custom/
                 - [item_name].json
                     {
-                        ... #TODO
+                        "name": "[name]",
+                        ... (other properties)
                     } 
-            
 
     - players/:
         - [player_name].json (multiple)
@@ -148,7 +149,12 @@ Data Structures and File Management
     - [location]/:
         - [location_name].json
             {
-                #TODO
+                "name": "[name]",
+                "description": "[]",
+                "other_properties": {
+                    "[property]": [value],
+                    ...
+                }
             }
         - [locations]/
             - [location]/
@@ -157,7 +163,17 @@ Data Structures and File Management
         - routes/
             - [route_name].json
                 {
-                    #TODO
+                    "name": "[name]",
+                    "endpoints": [
+                        "[location_path]",
+                        "[location_path]"
+                    ],
+                    "distance": "[distance]",
+                    "descriptio": "[description]",
+                    "other_properties": {
+                        "[property]": [value],
+                        ...
+                    }
                 }
 Python Class structures
 - 
@@ -183,3 +199,56 @@ Future Enhancements (Optional)
 - Explore multiplayer support for future versions.
 - Consider adding magic systems, factions, or alignment tracking as simple text-based attributes.
 - Plan for optimizations (incremental data loading, safeguards on event generation).
+
+
+
+objects with properties. locations with properties (maybe the same?)
+
+> objects
+    > characters
+        player.json
+            {
+                "name": "player1"
+                "id": (generated for game or specified)
+                "tags": ["player", "tag", ...]
+                "special_type": "player"
+                "relations": [
+                    ["[id]", "relation"]
+                    ...
+                    ["[namespace]", [
+                        ["[id]", "[relation]"]
+                    ]]
+                ]
+                "properties": [
+                    "property",
+                    ["property", "value"]
+                    ["namespace", []]
+                ]
+            }
+    > namespace1
+        item1.json
+            {
+                "name": "item1",
+                "id": (generated for game or specified),
+                "tags": ["tag", ...],
+                "relations": [
+                    ["[id]", "relation"],
+                    ...
+                    ["[namespace]", [
+                        ["[id]", "[relation]"]
+                    ]]
+                ],
+                "properties": [
+                    "property",
+                    ["property", "value"],
+                    ["namespace", []]
+                ],
+            }
+        location.json 
+            {
+                "name": "location1",
+                "id" "location1",
+                "tags": [...],
+                "relations": [...],
+                "properties": [...],
+            }

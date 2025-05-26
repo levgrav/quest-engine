@@ -1,6 +1,7 @@
 # model.py
 import json
 import ai.gpt as gpt
+from utils.logger import Log
 
 
 class ProjectModel:
@@ -8,6 +9,8 @@ class ProjectModel:
 
         self.parent_dir = r"files\game_data\game_templates"
         self._project_name = project_name
+        self.log = Log("files/logs/log.txt")
+        self.log.clear_log()
         self.gpt = gpt.Gpt(self)
 
     @property

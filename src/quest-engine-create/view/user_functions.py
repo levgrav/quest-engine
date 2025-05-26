@@ -1,21 +1,10 @@
 import os
 import json
 
-class Gpt_Functions:
+class User_Functions:
 
     def __init__(self, project_model) -> None:
         self.project_model = project_model
-
-    def remove_directory_absolute(self, path):
-        try:
-            os.rmdir(path)
-        except OSError as e:
-            for root, dirs, files in os.walk(path, topdown=False):
-                for name in files:
-                    os.remove(os.path.join(root, name))
-                for name in dirs:
-                    self.remove_directory_absolute(os.path.join(root, name))
-            os.rmdir(path)
 
     def create_project(self, name, author):
         if not name:
@@ -155,19 +144,3 @@ class Gpt_Functions:
             return f"Path {path} does not exist in project {project_name}"
 
         return str(os.listdir(full_path))
-    
-    def get_file_content(self, project_name, file_path):
-        full_path = os.path.join(self.project_model.parent_dir, project_name, file_path)
-        if not os.path.exists(full_path):
-            return f"File {file_path} does not exist in project {project_name}"
-
-        with open(full_path, "r") as f:
-            return f.read()
-    
-    def set_file_content(self, project_name, file_path, content):
-        full_path = os.path.join(self.project_model.parent_dir, project_name, file_path)
-        if not os.path.exists(full_path):
-            return f"File {file_path} does not exist in project {project_name}"
-
-        with open(full_path, "w") as f:
-            f.write(content)

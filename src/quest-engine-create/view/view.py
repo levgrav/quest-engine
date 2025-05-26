@@ -66,3 +66,6 @@ class MainWindow(QMainWindow):
         self.ui_manager.create_action.triggered.connect(
             self.project_manager.create_project
         )
+        self.ui_manager.project_tree_view.itemDoubleClicked.connect(
+            lambda item:  self.project_manager.open_project(item) if not self.view_model.is_project_open() else None
+        )
