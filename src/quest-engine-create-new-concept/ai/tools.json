@@ -2,6 +2,20 @@
     {
         "type": "function",
         "function": {
+            "name": "explore",
+            "description": "Recursively explore the directory structure of all projects and list contents of files and folders.",
+            "strict": true,
+            "parameters": {
+                "type": "object",
+                "properties": {},
+                "required": [],
+                "additionalProperties": false
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
             "name": "create_project",
             "description": "Create a new project with a given name and author, and populate it with template files.",
             "strict": true,
@@ -17,7 +31,10 @@
                         "description": "The author of the project"
                     }
                 },
-                "required": ["name", "author"],
+                "required": [
+                    "name",
+                    "author"
+                ],
                 "additionalProperties": false
             }
         }
@@ -26,7 +43,7 @@
         "type": "function",
         "function": {
             "name": "delete_project",
-            "description": "Delete a project and all its files and directories",
+            "description": "Delete a project and all its files and directories.",
             "strict": true,
             "parameters": {
                 "type": "object",
@@ -36,7 +53,9 @@
                         "description": "The name of the project to delete"
                     }
                 },
-                "required": ["name"],
+                "required": [
+                    "name"
+                ],
                 "additionalProperties": false
             }
         }
@@ -45,7 +64,7 @@
         "type": "function",
         "function": {
             "name": "list_projects",
-            "description": "List all available projects",
+            "description": "List all available projects.",
             "strict": true,
             "parameters": {
                 "type": "object",
@@ -58,9 +77,8 @@
     {
         "type": "function",
         "function": {
-            "name": "list_files",
-            "description": "List all files in a specific directory within a project",
-            "strict": true,
+            "name": "list_dir",
+            "description": "List all files in a specific directory within a project.",
             "parameters": {
                 "type": "object",
                 "properties": {
@@ -70,10 +88,12 @@
                     },
                     "path": {
                         "type": "string",
-                        "description": "The path inside the project to list files from"
+                        "description": "The subpath inside the project to list files from"
                     }
                 },
-                "required": ["project_name", "path"],
+                "required": [
+                    "project_name"
+                ],
                 "additionalProperties": false
             }
         }
@@ -82,7 +102,7 @@
         "type": "function",
         "function": {
             "name": "get_file_content",
-            "description": "Get the contents of a file within a project",
+            "description": "Get the contents of a file within a project. Provide 'as_dict' (true/false) to parse JSON.",
             "strict": true,
             "parameters": {
                 "type": "object",
@@ -94,9 +114,17 @@
                     "file_path": {
                         "type": "string",
                         "description": "The relative path of the file within the project"
+                    },
+                    "as_dict": {
+                        "type": "boolean",
+                        "description": "Whether to parse the file as JSON and return a dict"
                     }
                 },
-                "required": ["project_name", "file_path"],
+                "required": [
+                    "project_name",
+                    "file_path",
+                    "as_dict"
+                ],
                 "additionalProperties": false
             }
         }
@@ -105,7 +133,7 @@
         "type": "function",
         "function": {
             "name": "set_file_content",
-            "description": "Set or replace the contents of a file within a project",
+            "description": "Set or replace the contents of a file within a project.",
             "strict": true,
             "parameters": {
                 "type": "object",
@@ -123,10 +151,325 @@
                         "description": "The content to write into the file"
                     }
                 },
-                "required": ["project_name", "file_path", "content"],
+                "required": [
+                    "project_name",
+                    "file_path",
+                    "content"
+                ],
+                "additionalProperties": false
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "add_property",
+            "description": "Add a property to the given path inside a file's properties.",
+            "strict": true,
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "project_name": {
+                        "type": "string"
+                    },
+                    "file_path": {
+                        "type": "string"
+                    },
+                    "value": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "path": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "project_name",
+                    "file_path",
+                    "value",
+                    "name",
+                    "path"
+                ],
+                "additionalProperties": false
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "remove_property",
+            "description": "Remove a property by value, name, or index from the given path inside a file's properties.",
+            "strict": true,
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "project_name": {
+                        "type": "string"
+                    },
+                    "file_path": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "value": {
+                        "type": "string"
+                    },
+                    "index": {
+                        "type": "string"
+                    },
+                    "path": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "project_name",
+                    "file_path",
+                    "name",
+                    "value",
+                    "index",
+                    "path"
+                ],
+                "additionalProperties": false
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "get_properties",
+            "description": "Get properties from a file at a specific path.",
+            "strict": true,
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "project_name": {
+                        "type": "string"
+                    },
+                    "file_path": {
+                        "type": "string"
+                    },
+                    "path": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "project_name",
+                    "file_path",
+                    "path"
+                ],
+                "additionalProperties": false
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "add_relation",
+            "description": "Add a relation (id, relation) to a file at a specific path.",
+            "strict": true,
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "project_name": {
+                        "type": "string"
+                    },
+                    "file_path": {
+                        "type": "string"
+                    },
+                    "id": {
+                        "type": "string"
+                    },
+                    "relation": {
+                        "type": "string"
+                    },
+                    "path": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "project_name",
+                    "file_path",
+                    "id",
+                    "relation",
+                    "path"
+                ],
+                "additionalProperties": false
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "remove_relation",
+            "description": "Remove a relation from a file under a specific path.",
+            "strict": true,
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "project_name": {
+                        "type": "string"
+                    },
+                    "file_path": {
+                        "type": "string"
+                    },
+                    "id": {
+                        "type": "string"
+                    },
+                    "relation": {
+                        "type": "string"
+                    },
+                    "path": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "project_name",
+                    "file_path",
+                    "id",
+                    "relation",
+                    "path"
+                ],
+                "additionalProperties": false
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "get_relations",
+            "description": "Get all relations for an ID from a file at a specific path.",
+            "strict": true,
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "project_name": {
+                        "type": "string"
+                    },
+                    "file_path": {
+                        "type": "string"
+                    },
+                    "id": {
+                        "type": "string"
+                    },
+                    "path": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "project_name",
+                    "file_path",
+                    "id",
+                    "path"
+                ],
+                "additionalProperties": false
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "add_namespace",
+            "description": "Add a namespace under a category at a specific path.",
+            "strict": true,
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "project_name": {
+                        "type": "string"
+                    },
+                    "file_path": {
+                        "type": "string"
+                    },
+                    "category": {
+                        "type": "string"
+                    },
+                    "path": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "project_name",
+                    "file_path",
+                    "category",
+                    "path",
+                    "name"
+                ],
+                "additionalProperties": false
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "remove_namespace",
+            "description": "Remove a namespace from a category at a specific path.",
+            "strict": true,
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "project_name": {
+                        "type": "string"
+                    },
+                    "file_path": {
+                        "type": "string"
+                    },
+                    "category": {
+                        "type": "string"
+                    },
+                    "path": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "project_name",
+                    "file_path",
+                    "category",
+                    "path",
+                    "name"
+                ],
+                "additionalProperties": false
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "edit_data",
+            "description": "Edit a top-level key/value pair in the file.",
+            "strict": true,
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "project_name": {
+                        "type": "string"
+                    },
+                    "file_path": {
+                        "type": "string"
+                    },
+                    "key": {
+                        "type": "string"
+                    },
+                    "value": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "project_name",
+                    "file_path",
+                    "key",
+                    "value"
+                ],
                 "additionalProperties": false
             }
         }
     }
 ]
-

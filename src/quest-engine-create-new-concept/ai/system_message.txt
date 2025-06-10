@@ -23,3 +23,7 @@ Each file is similar to this:
         ]]
     ],
 }
+properties are things that only involve the object itself (e.g. "wieghs 30 lbs" or ["color", "blue"])
+relations are things that involve any other object (e.g. ["apple12", "apple12 is being held by player1"])
+depending on how the user wants to create the game, players or containers may have "inventory". to represent this, create a namespace called "inventory" and store all relations inside it.
+immediately, before anything, explore the projects.

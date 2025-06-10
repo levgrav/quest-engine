@@ -14,6 +14,7 @@ class App():
 
     def main(self):
         self.done = False
+        self.gpt.update_messages()
 
         while not self.done:
             user_input = input("> ")
@@ -30,7 +31,7 @@ class App():
             })
             next_message_index = len(self.gpt.messages)
             self.gpt.update_messages()
-            print("\n".join(json.dumps(message, indent=2) for message in self.gpt.messages[next_message_index:]))
+            print("\n".join(str(message["content"]) for message in self.gpt.messages[next_message_index:]))
         
         print("Program terminated")
     

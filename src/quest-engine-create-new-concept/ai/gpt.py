@@ -76,6 +76,7 @@ class Gpt:
         )
 
     def update_messages(self):
+        self.app.log.log(json.dumps(self.messages[-1]))
         tries = 0
         response = None
         while tries < 3:
@@ -91,11 +92,12 @@ class Gpt:
             return
         
         self.messages.append(response.choices[0].message.to_dict())
+        self.app.log.log(json.dumps(response.choices[0].message.to_dict()))
 
         if response.choices[0].finish_reason == "tool_calls":
             for call in response.choices[0].message.tool_calls:
                 value = self.functions.evaluate(call.to_dict())
-                self.messages.append({
+                message = {
                     "role": "tool",
                     "content": [
                         {
@@ -104,6 +106,7 @@ class Gpt:
                         }
                     ],
                     "tool_call_id": call.id
-                })
+                }
+                self.messages.append(message)
             
             self.update_messages()
