@@ -1,0 +1,47 @@
+/* GamePage.css */
+
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh; /* full viewport height */
+}
+
+.header, .footer {
+  flex: 0 0 auto;  /* fixed size */
+  position: sticky;
+  z-index: 10;
+  background-color: #2563eb; /* blue background for header */
+  color: white;
+  padding: 1rem;
+}
+
+.header {
+  top: 0;
+  font-weight: bold;
+  font-size: 1.25rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.footer {
+  bottom: 0;
+  background-color: #e5e7eb; /* light gray background for footer */
+  padding: 1rem;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  box-shadow: 0 -2px 4px rgba(0,0,0,0.1);
+}
+
+.main {
+  flex: 1 1 auto; /* take all remaining space */
+  overflow-y: auto;
+  background-color: #f3f4f6; /* lighter gray for message background */
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+body {
+    margin: 0;
+}

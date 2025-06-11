@@ -11,6 +11,7 @@ class GameWorld:
         self.game_objects = game_objects
         self.last_modified = datetime.now()
         self._log = []
+        self.display_messages = []
         
         self.assert_unique_ids()
 
@@ -36,6 +37,9 @@ class GameWorld:
 
     def set_last_modified(self):
         self.last_modified = datetime.now()
+
+    def add_message(self, message):
+        self.display_messages.append(message)
 
 class GameObject:
     def __init__(self, name, id = None, tags = [], relations = [], properties = [], **kwargs):

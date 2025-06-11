@@ -5,9 +5,7 @@ import pickle
 def get_flat_json_files(path):
     data = []
     if os.path.isdir(path):
-        print(path, "is dir")
         for filename in os.listdir(path):
-            print(data, path, filename)
             data += get_flat_json_files(os.path.join(path, filename))
     elif path.endswith(".json"):
         with open(path) as f:

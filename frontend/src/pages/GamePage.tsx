@@ -1,29 +1,23 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import React, { useEffect, useState, useRef } from "react";
 import { fetchGameState, sendAction } from "../api/gameApi";
+import { useParams } from "react-router-dom";
+import "../styles/GamePage.css";  // <-- import the css here
 
 export default function GamePage() {
   const { sessionId } = useParams<{ sessionId: string }>();
   const [state, setState] = useState<any>(null);
   const [input, setInput] = useState("");
+  const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    if (!sessionId) {
-      console.log("No sessionId in URL.");
-      return;
+    if (sessionId) {
+      fetchGameState(sessionId).then(setState).catch(console.error);
     }
-
-    console.log("Loading session", sessionId);
-
-    fetchGameState(sessionId)
-      .then((data) => {
-        console.log("Game state:", data);
-        setState(data);
-      })
-      .catch((err) => {
-        console.error("Error loading game state:", err);
-      });
   }, [sessionId]);
+
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [state?.display_messages]);
 
   const handleSubmit = async () => {
     if (!sessionId || !input) return;
@@ -33,18 +27,31 @@ export default function GamePage() {
   };
 
   return (
-    <div className="p-4 text-white">
-      <h2 className="text-xl font-bold mb-2">Game: {state?.name?? "Loading..."}</h2>
-      <pre className="bg-gray-800 p-2 mb-2">{JSON.stringify(state, null, 2)}</pre>
-      <input
-        type="text"
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-        className="border p-1 mr-2 text-black"
-      />
-      <button onClick={handleSubmit} className="bg-blue-500 text-white px-4 py-1 rounded">
-        Send
-      </button>
+    <div className="container">
+      <header className="header">
+        Game: {state?.name ?? "Loading..."}
+      </header>
+
+      <main className="main">
+        {state?.display_messages?.map((msg: string, idx: number) => (
+          <p key={idx}>{msg}</p>
+        ))}
+        <div ref={messagesEndRef} />
+      </main>
+
+      <footer className="footer">
+        <input
+          type="text"
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
+          placeholder="Enter command..."
+          style={{ flex: 1, padding: "0.5rem", borderRadius: "4px", border: "1px solid #ccc" }}
+        />
+        <button onClick={handleSubmit} style={{ padding: "0.5rem 1rem", borderRadius: "4px", backgroundColor: "#2563eb", color: "white", border: "none" }}>
+          Send
+        </button>
+      </footer>
     </div>
   );
 }
