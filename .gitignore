@@ -54,3 +54,6 @@ openai_api_key.txt
 
 # test files
 test_scripts/
+
+# game instances
+backend/game_data/game_instances/
