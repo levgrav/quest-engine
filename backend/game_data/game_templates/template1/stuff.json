@@ -1,0 +1,11 @@
+{
+    "name": "item",
+    "id": "item",
+    "tags": ["thing"],
+    "relations": [
+        ["location", "the location of"]
+    ],
+    "properties": [
+        "description"
+    ]
+}

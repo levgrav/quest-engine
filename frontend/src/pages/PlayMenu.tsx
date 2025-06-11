@@ -1,29 +1,37 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { fetchGameInstances, fetchGameTemplates, startGame } from "../api/gameApi";
 
 export default function PlayMenu() {
+  const [templates, setTemplates] = useState<string[]>([]);
+  const [selected, setSelected] = useState<string | null>(null);
   const navigate = useNavigate();
-  const games = ["Castle of Night", "Desert Escape", "Mystic River"];
+
+  useEffect(() => {
+    fetchGameTemplates().then(setTemplates).catch(console.error);
+  }, []);
+
+  const handleStart = async () => {
+    if (!selected) return;
+    const { session_id } = await startGame(selected);
+    navigate(`/game/${session_id}`);
+  };
 
   return (
-    <div style={styles.container}>
-      <h2>Select a Game</h2>
-      <ul>
-        {games.map((g, i) => (
-          <li key={i}>{g}</li>
+    <div className="p-4">
+      <h1 className="text-2xl font-bold mb-4">Choose a Game</h1>
+      <ul className="mb-4">
+        {templates.map((t) => (
+          <li key={t}>
+            <button onClick={() => setSelected(t)} className="text-blue-500">
+              {t}
+            </button>
+          </li>
         ))}
       </ul>
-      <button onClick={() => navigate("/game")}>Go</button>
-      <button onClick={() => navigate(-1)}>Back</button>
+      <button onClick={handleStart} disabled={!selected} className="btn">
+        Start Game
+      </button>
     </div>
   );
 }
-
-const styles = {
-  container: {
-    padding: "2rem",
-    backgroundColor: "#111",
-    color: "#fff",
-    minHeight: "100vh",
-  },
-};

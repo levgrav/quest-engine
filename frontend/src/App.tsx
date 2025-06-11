@@ -13,7 +13,7 @@ export default function App() {
       <Route path="/create" element={<CreateMenu />} />
       <Route path="/play" element={<PlayMenu />} />
       <Route path="/edit" element={<EditorPage />} />
-      <Route path="/game" element={<GamePage />} />
+      <Route path="/game/:sessionId" element={<GamePage />} />
     </Routes>
   );
 }

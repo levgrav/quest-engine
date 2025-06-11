@@ -1,12 +1,8 @@
 from pydantic import BaseModel
 
-class GameStartRequest(BaseModel):
-    player_name: str
+class StartRequest(BaseModel):
+    template: str
 
-class GameInputRequest(BaseModel):
-    player_name: str
-    input_text: str
-
-class GameResponse(BaseModel):
-    message: str
-    player_location: str
+class ActionRequest(BaseModel):
+    session_id: str
+    command: str

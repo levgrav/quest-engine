@@ -1,16 +1,21 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { fetchGameTemplates } from "../api/gameApi";
 import { useNavigate } from "react-router-dom";
 
 export default function CreateMenu() {
   const navigate = useNavigate();
-  const projects = ["Project Alpha", "Lost Forest", "Test World"];
+  const [games, setGames] = useState<string[]>([]);
+
+  useEffect(() => {
+    fetchGameTemplates().then(setGames).catch(console.error);
+  }, []);
 
   return (
     <div style={styles.container}>
       <h2>Select a Project</h2>
       <ul>
-        {projects.map((p, i) => (
-          <li key={i}>{p}</li>
+        {games.map((g, i) => (
+          <li key={i}>{g}</li>
         ))}
       </ul>
       <button>Create New Project</button>
