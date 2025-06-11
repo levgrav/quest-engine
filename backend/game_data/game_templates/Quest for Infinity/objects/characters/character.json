@@ -1,0 +1,11 @@
+{
+    "name": "character",
+    "id": "character",
+    "tags": ["npc"],
+    "special_type": "npc",
+    "relations": [
+        ["location", "the location of"],
+        ["object", "being held by"]
+    ],
+    "properties": []
+}

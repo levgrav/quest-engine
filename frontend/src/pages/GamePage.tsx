@@ -34,7 +34,7 @@ export default function GamePage() {
 
   return (
     <div className="p-4 text-white">
-      <h2 className="text-xl font-bold mb-2">Game: {sessionId}</h2>
+      <h2 className="text-xl font-bold mb-2">Game: {state?.name?? "Loading..."}</h2>
       <pre className="bg-gray-800 p-2 mb-2">{JSON.stringify(state, null, 2)}</pre>
       <input
         type="text"

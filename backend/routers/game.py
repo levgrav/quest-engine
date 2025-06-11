@@ -8,7 +8,7 @@ router = APIRouter()
 def list_templates():
     return game_loader.list_templates()
 
-@router.get("list_instances")
+@router.get("/list_instances")
 def list_instances():
     return game_runner.list_instances()
 
