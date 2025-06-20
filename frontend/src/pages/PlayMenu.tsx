@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { fetchGameTemplates, startGame, fetchGameInstances } from "../api/gameApi";
 import { useNavigate } from "react-router-dom";
+import "../styles/PlayMenu.css";
 
 export default function PlayMenu() {
   const navigate = useNavigate();
@@ -27,40 +28,58 @@ export default function PlayMenu() {
   };
 
   return (
-    <div className="p-6 flex flex-col gap-6">
-      <h1 className="text-2xl font-bold">Play Menu</h1>
+    <div className="play-container">
+      <h1 className="title">Play Menu</h1>
 
-      <div>
-        <h2 className="text-lg font-semibold mb-2">Start New Game</h2>
-        <ul className="mb-2">
+      <div className="section">
+        <h2>Start New Game</h2>
+        <ul className="template-list">
           {templates.map((t) => (
             <li key={t}>
-              <button onClick={() => setSelectedTemplate(t)} className="text-blue-500">
+              <button
+                onClick={() => setSelectedTemplate(t)}
+                className={`template-button ${selectedTemplate === t ? "selected" : ""}`}
+              >
                 {t}
               </button>
             </li>
           ))}
         </ul>
-        <button onClick={handleStartNew} disabled={!selectedTemplate} className="btn">
+        <button
+          onClick={handleStartNew}
+          disabled={!selectedTemplate}
+          className="go-button"
+        >
           Start New
         </button>
       </div>
 
-      <div>
-        <h2 className="text-lg font-semibold mb-2">Load Existing Game</h2>
-        <ul className="mb-2">
-          {instances.map((instance) => (
-            <li key={instance}>
-              <button onClick={() => setSelectedInstance(instance[0])} className="text-green-600">
-                {instance[1]} Last Modified: {instance[2]}
+      <div className="section">
+        <h2>Load Existing Game</h2>
+        <ul className="template-list">
+          {instances.map(([id, name, modified]) => (
+            <li key={id}>
+              <button
+                onClick={() => setSelectedInstance(id)}
+                className={`template-button ${selectedInstance === id ? "selected" : ""}`}
+              >
+                {name} — Last Modified: {modified}
               </button>
             </li>
           ))}
         </ul>
-        <button onClick={handleLoadInstance} disabled={!selectedInstance} className="btn">
+        <button
+          onClick={handleLoadInstance}
+          disabled={!selectedInstance}
+          className="go-button"
+        >
           Load Game
         </button>
       </div>
+
+      <button onClick={() => navigate(-1)} className="back-button">
+        Back
+      </button>
     </div>
   );
 }

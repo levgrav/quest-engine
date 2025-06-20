@@ -14,6 +14,7 @@ export async function post<T>(endpoint: string, data: any): Promise<T> {
     },
     body: JSON.stringify(data),
   });
+  console.log("hello")
   if (!res.ok) throw new Error(`POST ${endpoint} failed`);
   return await res.json();
 }

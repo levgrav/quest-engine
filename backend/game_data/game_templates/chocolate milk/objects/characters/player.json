@@ -1,0 +1,17 @@
+{
+  "name": "player",
+  "id": "player",
+  "tags": [
+    "player"
+  ],
+  "special_type": "player",
+  "relations": [
+    [
+      "chocolate_milk_world",
+      "choco is in chocolate milk world"
+    ]
+  ],
+  "properties": [
+    "wants chocolate milk"
+  ]
+}

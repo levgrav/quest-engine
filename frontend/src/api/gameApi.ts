@@ -20,3 +20,11 @@ export async function sendAction(sessionId: string, command: string): Promise<an
 export async function fetchGameState(sessionId: string): Promise<any> {
   return get(`game/state/${sessionId}`);
 }
+
+export async function fetchTemplate(templateName: string): Promise<any> {
+  return get(`game/template/${templateName}`);
+}
+
+export async function saveTemplate(templateName: string, data: any): Promise<any> {
+  return post(`game/template/${templateName}`, data);
+}

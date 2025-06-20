@@ -1,0 +1,20 @@
+{
+  "name": "chocolate_milk_world",
+  "id": "chocolate_milk_world",
+  "tags": [
+    "place"
+  ],
+  "relations": [
+    [
+      "choco",
+      "choco is in chocolate milk world"
+    ],
+    [
+      "player",
+      "player is holding the chocolate milk"
+    ]
+  ],
+  "properties": [
+    "a world with the sole purpose of containing chocolate milk"
+  ]
+}

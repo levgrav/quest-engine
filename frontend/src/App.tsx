@@ -1,4 +1,4 @@
-import React from "react";
+// import React from "react";
 import { Routes, Route } from "react-router-dom";
 import MainMenu from "./pages/MainMenu";
 import CreateMenu from "./pages/CreateMenu";
@@ -12,8 +12,8 @@ export default function App() {
       <Route path="/" element={<MainMenu />} />
       <Route path="/create" element={<CreateMenu />} />
       <Route path="/play" element={<PlayMenu />} />
-      <Route path="/edit" element={<EditorPage />} />
       <Route path="/game/:sessionId" element={<GamePage />} />
+      <Route path="/edit/:templateName" element={<EditorPage />} />
     </Routes>
   );
 }

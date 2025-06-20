@@ -1,0 +1,15 @@
+{
+  "name": "player",
+  "id": "player1",
+  "tags": [
+    "player"
+  ],
+  "special_type": "player",
+  "relations": [
+    [
+      "location",
+      "the location of"
+    ]
+  ],
+  "properties": []
+}

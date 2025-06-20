@@ -1,0 +1,58 @@
+.play-container {
+  padding: 2rem;
+  background-color: #111;
+  color: #fff;
+  min-height: 100vh;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+}
+
+.section {
+  margin-bottom: 2rem;
+}
+
+.template-list {
+  list-style: none;
+  padding-left: 0;
+  margin-bottom: 1rem;
+}
+
+.template-button {
+  background-color: #333;
+  color: #eee;
+  padding: 0.5rem 1rem;
+  margin: 0.2rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.template-button.selected {
+  background-color: #28a745;
+  color: #fff;
+}
+
+.go-button,
+.back-button {
+  background-color: #555;
+  color: #fff;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 0.5rem;
+}
+
+.go-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.go-button:hover:not(:disabled),
+.back-button:hover {
+  background-color: #777;
+}

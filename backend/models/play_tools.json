@@ -1,0 +1,100 @@
+[
+  {
+    "type": "function",
+    "function": {
+      "name": "list_objects",
+      "description": "List all game object names currently in the game state.",
+      "strict": true,
+      "parameters": {
+        "type": "object",
+        "properties": {},
+        "required": [],
+        "additionalProperties": false
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "get_object_data",
+      "description": "Retrieve the data for a specific game object by name.",
+      "strict": true,
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "object_name": {
+            "type": "string",
+            "description": "The name of the game object to retrieve."
+          }
+        },
+        "required": ["object_name"],
+        "additionalProperties": false
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "update_object_data",
+      "description": "Update an existing game object's data using a dictionary of fields to change.",
+      "strict": true,
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "object_name": {
+            "type": "string",
+            "description": "The name of the game object to update."
+          },
+          "data": {
+            "type": "string",
+            "description": "Valid json for the object data"
+          }
+        },
+        "required": ["object_name", "data"],
+        "additionalProperties": false
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "remove_object",
+      "description": "Remove a game object from the game state by name.",
+      "strict": true,
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "object_name": {
+            "type": "string",
+            "description": "The name of the game object to remove."
+          }
+        },
+        "required": ["object_name"],
+        "additionalProperties": false
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "add_object",
+      "description": "Add a new game object to the game state with the specified name and data.",
+      "strict": true,
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "object_name": {
+            "type": "string",
+            "description": "The name for the new game object."
+          },
+          "data": {
+            "type": "string",
+            "description": "Valid json for the object data"
+          }
+        },
+        "required": ["object_name", "data"],
+        "additionalProperties": false
+      }
+    }
+  }
+]

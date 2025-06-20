@@ -1,0 +1,21 @@
+{
+  "name": "chocolate_milk",
+  "id": "chocolate_milk",
+  "tags": [
+    "drink",
+    "holdable"
+  ],
+  "relations": [
+    [
+      "chocolate_milk_world",
+      "choco is in chocolate milk world"
+    ],
+    [
+      "choco",
+      "choco is holding the chocolate milk"
+    ]
+  ],
+  "properties": [
+    "tasty"
+  ]
+}

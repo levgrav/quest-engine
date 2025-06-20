@@ -1,0 +1,23 @@
+{
+  "name": "Choco",
+  "id": "choco",
+  "tags": [
+    "npc"
+  ],
+  "special_type": "npc",
+  "relations": [
+    [
+      "chocolate_milk_world",
+      "choco is in chocolate milk world"
+    ],
+    [
+      "chocolate_milk",
+      "he is holding the chocolate milk"
+    ]
+  ],
+  "properties": [
+    "tall",
+    "chocolate colored skin",
+    "obsesses with chocolate milk"
+  ]
+}

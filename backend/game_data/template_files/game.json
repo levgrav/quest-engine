@@ -1,0 +1,61 @@
+{
+    "world.json": {
+        "name": "world_name",
+        "author": "you",
+        "description": "",
+        "backstory": ""
+    },
+    "objects/characters/character.json": {
+        "name": "character",
+        "id": "character",
+        "tags": ["npc"],
+        "special_type": "npc",
+        "relations": [
+            ["location", "character is in location"],
+            ["object", "being held by"]
+        ],
+        "properties": []
+    },
+    "objects/characters/player.json": {
+        "name": "player",
+        "id": "player",
+        "tags": ["player"],
+        "special_type": "player",
+        "relations": [
+            ["location", "the location of"]
+        ],
+        "properties": []
+    },
+    "objects/world/item.json": {
+        "name": "item",
+        "id": "item",
+        "tags": ["thing"],
+        "relations": [
+            ["location", "the location of"]
+        ],
+        "properties": [
+            "description"
+        ]
+    },
+    "objects/world/location.json": {
+        "name": "locaion",
+        "id": "locaion",
+        "tags": ["place"],
+        "relations": [
+            ["item", "found in"],
+            ["player", "found in"]
+        ],
+        "properties": [
+            "description"
+        ]
+    },
+    "objects/world/object.json": {
+        "name": "object",
+        "id": "object",
+        "tags": [],
+        "relations": [
+            ["character", "holding"]
+        ],
+        "properties": []
+    }
+}

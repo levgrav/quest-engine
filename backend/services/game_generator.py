@@ -1,12 +1,14 @@
 from ..models.game import GameObject, GameWorld
 
 def generate_game(game_data) -> GameWorld:
-    game_objects = []
+    game_objects = {}
     world_data = {}
-    for filename, data in game_data:
-        if filename == "world":
+    for path, data in game_data.items():
+        print(path)
+        if path.endswith("world.json"):
+            print("world data recognized")
             world_data = data
         else:
-            game_objects.append(GameObject(**data))
+            game_objects[path] = GameObject(**data)
 
     return GameWorld(game_objects, **world_data)

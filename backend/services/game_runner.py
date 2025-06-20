@@ -3,10 +3,12 @@ import os
 from .game_generator import generate_game
 from .game_loader import load_template
 from .ai import generate_response
+from ..models.gpt import Gpt
 from ..utils.file_ops import pkl_dump, pkl_load
 
 
 INSTANCE_DIR = "backend/game_data/game_instances"
+gpts = {}
 
 def list_instances():
     instances = [f[:-4] for f in os.listdir(INSTANCE_DIR) if f.endswith(".pkl")]
@@ -15,7 +17,7 @@ def list_instances():
 
 def get_instance_data(session_id, *args):
     game_state = pkl_load(INSTANCE_DIR, session_id)
-    data = {arg: game_state.__getattribute__(arg) for arg in args}
+    data = {arg: game_state.__dict__.get(arg) for arg in args}
     return data
 
 def new_game(template_name: str):
@@ -30,10 +32,11 @@ def load_instance(session_id: str):
 
 def update_game(session_id: str, action: str):
     game_state = pkl_load(INSTANCE_DIR, session_id)
-    game_state.add_message(action)
-    response = generate_response(game_state)
-    game_state.add_message(response)
-    print(game_state.display_messages)
+    
+    if session_id not in gpts.keys():
+        gpts[session_id] = Gpt(game_state, **game_state.gpt_data)
+    
+    game_state.process_action(action, gpts[session_id])
     game_state.set_last_modified()
     pkl_dump(INSTANCE_DIR, session_id, game_state)
     return game_state
@@ -41,3 +44,6 @@ def update_game(session_id: str, action: str):
 def get_messages(session_id: str):
     game_state = pkl_load(INSTANCE_DIR, session_id)
     return game_state.messages
+
+def close_game(session_id: str):
+    del gpts[session_id]
